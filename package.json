@@ -4,6 +4,8 @@
   "description": "Starter project",
   "main": "server/index.js",
   "scripts": {
+    "prelint": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma none --write \"server/**/*.js\"",
+    "lint": "xo --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage",
@@ -11,7 +13,8 @@
     "migration:create": "npm run sequelize -- migration:create",
     "migrate": "npm run sequelize -- db:migrate",
     "model:create": "npm run sequelize -- model:create",
-    "seed": "npm run sequelize -- db:seed:all"
+    "seed": "npm run sequelize -- db:seed:all",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -24,8 +27,12 @@
   },
   "homepage": "https://github.com/thiamsantos/express-boilerplate#readme",
   "devDependencies": {
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
-    "sequelize-cli": "^2.7.0"
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
+    "sequelize-cli": "^2.7.0",
+    "xo": "^0.18.2"
   },
   "dependencies": {
     "cpf_cnpj": "^0.2.0",
@@ -38,5 +45,22 @@
   "jest": {
     "automock": false,
     "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "jest"
+    ],
+    "rules": {
+      "strict": 2
+    },
+    "space": true,
+    "semicolon": false
   }
 }

@@ -1,4 +1,8 @@
-const {validateUser, generateSecurePassword, verifySecurePassword} = require('./user-entity')
+const {
+  validateUser,
+  generateSecurePassword,
+  verifySecurePassword
+} = require('./user-entity')
 
 const basicUserInfo = {
   name: 'Willian',
@@ -17,6 +21,28 @@ describe('validateUser', () => {
 
     expected.toThrow(Error)
     expected.toThrow('Invalid email')
+  })
+
+  it('should validate the name', () => {
+    const userInfo = Object.assign({}, basicUserInfo, {name: 'wi'})
+
+    const expected = expect(() => {
+      validateUser(userInfo)
+    })
+
+    expected.toThrow(Error)
+    expected.toThrow('Invalid name')
+  })
+
+  it('should throw an Error', () => {
+    const userInfo = Object.assign({}, basicUserInfo, {name: 12})
+
+    const expected = expect(() => {
+      validateUser(userInfo)
+    })
+
+    expected.toThrow(Error)
+    expected.toThrow('Invalid name')
   })
 
   it('should validate the cpf', () => {
@@ -62,7 +88,9 @@ describe('generateSecurePassword', () => {
   })
 
   it('should throw an error', async () => {
-    await expect(generateSecurePassword(new Error())).rejects.toEqual(new Error('Impossible to generate secure password'))
+    await expect(generateSecurePassword(new Error())).rejects.toEqual(
+      new Error('Impossible to generate secure password')
+    )
   })
 })
 

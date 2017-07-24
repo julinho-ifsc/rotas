@@ -8,8 +8,12 @@ const pwd = securePassword()
 pwd.hash = promisify(pwd.hash)
 pwd.verify = promisify(pwd.verify)
 
-exports.validateUser = function({name, email, password, cpf}) {
+exports.validateUser = function ({name, email, password, cpf}) {
   const passwordTest = owasp.test(password)
+
+  if (typeof name !== 'string' || name.length < 3) {
+    throw new Error('Invalid name')
+  }
 
   if (passwordTest.strong === false) {
     throw new Error(passwordTest.errors[0])
@@ -24,17 +28,17 @@ exports.validateUser = function({name, email, password, cpf}) {
   }
 }
 
-exports.generateSecurePassword = async function(password) {
+exports.generateSecurePassword = async function (password) {
   try {
     const userPassword = Buffer.from(password)
     const hash = await pwd.hash(userPassword)
     return hash.toString('utf8')
-  } catch(err) {
+  } catch (err) {
     throw new Error('Impossible to generate secure password')
   }
 }
 
-exports.verifySecurePassword = async function(password, hash) {
+exports.verifySecurePassword = async function (password, hash) {
   try {
     const userPassword = Buffer.from(password)
     const result = await pwd.verify(userPassword, Buffer.from(hash))
@@ -42,10 +46,9 @@ exports.verifySecurePassword = async function(password, hash) {
     if (result === securePassword.INVALID) {
       return false
     }
-  } catch(err) {
+  } catch (err) {
     return false
   }
 
   return true
 }
-
