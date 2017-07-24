@@ -1,0 +1,30 @@
+{
+  "name": "express-boilerplate",
+  "version": "0.0.1",
+  "description": "Starter project",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiamsantos/express-boilerplate.git"
+  },
+  "author": "Thiago Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thiamsantos/express-boilerplate/issues"
+  },
+  "homepage": "https://github.com/thiamsantos/express-boilerplate#readme",
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
+  "dependencies": {
+    "cpf_cnpj": "^0.2.0",
+    "isemail": "^3.0.0",
+    "owasp-password-strength-test": "^1.3.0",
+    "secure-password": "^2.1.1"
+  }
+}
