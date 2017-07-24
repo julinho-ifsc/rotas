@@ -4,7 +4,6 @@ const basicUserInfo = {
   name: 'Willian',
   email: 'riker@enterprise.com',
   password: 'Str0ngP4ssw0rd$',
-  level: 'admin',
   cpf: '532.820.857-96'
 }
 
