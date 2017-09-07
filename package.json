@@ -52,6 +52,8 @@
     "semicolon": false
   },
   "dependencies": {
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "helmet": "^3.8.1"
   }
 }
