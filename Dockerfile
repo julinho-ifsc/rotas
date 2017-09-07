@@ -1,11 +1,10 @@
-FROM node:8.4
-
+FROM node:8.4-alpine
 WORKDIR /app
-
-COPY package.json package-lock.json index.js ./
-
+RUN npm install --global nodemon
+COPY package.json package-lock.json ./
 RUN npm install
-
-EXPOSE 80
-
-CMD ["npm", "start"]
+COPY . ./
+EXPOSE 8080
+ENV NPM_CONFIG_LOGLEVEL warn
+USER node
+CMD ["node", "index.js"]
