@@ -1,6 +1,6 @@
 FROM node:8.4-alpine
 WORKDIR /app
-RUN npm install --global nodemon
+RUN npm install --global nodemon knex
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . ./

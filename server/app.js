@@ -1,11 +1,13 @@
 const express = require('express')
+const compression = require('compression')
 const morgan = require('morgan')
 const helmet = require('helmet')
 
 const app = express()
 
-app.use(helmet())
 app.use(morgan('tiny'))
+app.use(compression())
+app.use(helmet())
 
 app.get('/', (req, res) => {
   res.send('Hello world')
