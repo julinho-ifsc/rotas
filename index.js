@@ -2,11 +2,11 @@ const spawn = require('child_process').spawn
 
 function run(env) {
   if (env === 'production') {
-    const child = spawn('node', ['server/app.js'])
+    const child = spawn('node', ['server/index.js'])
     child.stdout.pipe(process.stdout)
     child.stderr.pipe(process.stderr)
   } else {
-    const child = spawn('nodemon', ['-L', 'server/app.js'])
+    const child = spawn('nodemon', ['-L', 'server/index.js'])
     child.stdout.pipe(process.stdout)
     child.stderr.pipe(process.stderr)
   }

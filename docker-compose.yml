@@ -15,3 +15,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: project
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:

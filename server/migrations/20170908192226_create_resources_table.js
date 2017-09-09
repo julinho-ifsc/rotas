@@ -1,5 +1,5 @@
 /* eslint unicorn/filename-case: 0 */
-exports.up = function (knex) {
+exports.up = function(knex) {
   return knex.schema.createTable('resources', table => {
     table.increments().primary()
     table.string('name').notNullable()
@@ -7,6 +7,6 @@ exports.up = function (knex) {
   })
 }
 
-exports.down = function (knex) {
+exports.down = function(knex) {
   return knex.schema.dropTable('resources')
 }

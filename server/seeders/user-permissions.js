@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const {generateHash} = require('../lib/password-hash')
+const {generateHash} = require('../core/password-hash')
 
 async function seed(knex) {
   await knex('roles').del()
