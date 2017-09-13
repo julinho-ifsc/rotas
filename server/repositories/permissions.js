@@ -1,20 +1,26 @@
-// SELECT role.name as role, r.name as resource, p.create, p.read, p.update, p.delete FROM permissions as p INNER JOIN resources AS r ON p.resource_id = r.id INNER JOIN roles AS role ON p.role_id = role.id WHERE r.id = 1 AND role.id = 3;
+const db = require('../config/database')
 
-async function getResourceIdByName(name) {
-  return knex.select('id').from('resources').where('name', name)
-}
-
-async function getRoleIdByUserId(userId) {
-  return knex.select('role_id').from('users').where('id', userId)
-}
-
-async function isAuthorized({resouceId, roleId, action}) {
-  return knex('permissions')
+async function isAuthorized({resourceId, roleId, action}) {
+  const authorizations = await db('permissions')
     .join('resources', 'resources.id', 'permissions.resource_id')
-    .join('roles', 'roles.id', 'permission.role_id')
-    .select('users.' + action)
+    .join('roles', 'roles.id', 'permissions.role_id')
+    .select('permissions.' + action)
     .where({
-      'resources.id': resouceId,
+      'resources.id': resourceId,
       'roles.id': roleId
     })
+
+  if (authorizations === null || authorizations.length === 0) {
+    return false
+  }
+
+  if (authorizations[0][action]) {
+    return true
+  }
+
+  return false
+}
+
+module.exports = {
+  isAuthorized
 }

@@ -1,5 +1,5 @@
 const {UnauthorizedUserError} = require('../core/errors')
-const {signToken} = require('../core/token')
+const {signToken, verifyToken} = require('../core/token')
 const {verifyPassword} = require('../core/password-hash')
 const {getUserByEmail} = require('../repositories/users')
 
@@ -18,6 +18,11 @@ async function generateToken(email, password) {
   })
 }
 
+async function authenticate(token) {
+  return verifyToken(token)
+}
+
 module.exports = {
-  generateToken
+  generateToken,
+  authenticate
 }
