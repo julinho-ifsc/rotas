@@ -1,11 +1,7 @@
-const express = require('express')
 const {generateToken} = require('../services/auth')
 const {UnauthorizedUserError} = require('../core/errors')
 
-// eslint-disable-next-line new-cap
-const router = express.Router()
-
-router.post('/', async (req, res) => {
+async function login(req, res) {
   try {
     const {email, password} = req.body
     const token = await generateToken(email, password)
@@ -23,6 +19,8 @@ router.post('/', async (req, res) => {
       message: 'Internal Server Error'
     })
   }
-})
+}
 
-module.exports = router
+module.exports = {
+  login
+}

@@ -1,18 +1,19 @@
 const express = require('express')
-const compression = require('compression')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
-const authController = require('./controllers/auth')
-const usersController = require('./controllers/users')
+const authRouter = require('./routers/auth')
+const usersRouter = require('./routers/users')
 
 const app = express()
 
-app.use(morgan('tiny'))
-app.use(compression())
+if (process.NODE_ENV === 'development') {
+  app.use(morgan('tiny'))
+}
+
 app.use(helmet())
 app.use(bodyParser.json())
-app.use('/auth', authController)
-app.use('/users', usersController)
+app.use('/auth', authRouter)
+app.use('/users', usersRouter)
 
 module.exports = app

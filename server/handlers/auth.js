@@ -1,12 +1,22 @@
 const {authenticate} = require('../services/auth')
+const {AuthorizationTypeError} = require('../core/errors')
 
 async function verifyAuthorization(req, res, next) {
   const token = req.get('Authorization')
 
   try {
-    res.locals.userInfo = await authenticate(token)
+    if (!token.startsWith('Bearer')) {
+      throw new AuthorizationTypeError()
+    }
+
+    res.locals.userInfo = await authenticate(token.replace('Bearer ', ''))
   } catch (err) {
-    console.log(err)
+    if (err.name === AuthorizationTypeError.name) {
+      return res.status(401).json({
+        message: 'Wrong authorization type'
+      })
+    }
+
     if (err.name === 'TokenExpiredError') {
       return res.status(401).json({
         message: 'Expired token'

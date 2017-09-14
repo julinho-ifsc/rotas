@@ -3,8 +3,8 @@ WORKDIR /app
 RUN apk add --update openssl
 RUN npm install --global nodemon knex
 COPY package.json package-lock.json ./
-RUN openssl genrsa -out /app/private.key 2048
-RUN openssl rsa -pubout -in /app/private.key -out /app/public.pem
+RUN openssl genrsa -out private.key 2048
+RUN openssl rsa -pubout -in private.key -out public.pem
 RUN npm install
 COPY . ./
 EXPOSE 8080

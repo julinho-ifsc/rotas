@@ -11,10 +11,10 @@ module.exports = {
     },
     migrations: {
       tableName: 'migrations_log',
-      directory: './server/migrations'
+      directory: './migrations'
     },
     seeds: {
-      directory: './server/seeders'
+      directory: './seeders'
     }
   }
 }

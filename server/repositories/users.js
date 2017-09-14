@@ -8,10 +8,15 @@ async function getUserByEmail(email) {
 }
 
 async function getAllUsers() {
-  return db.select('name', 'role_id', 'email').from('users')
+  return db.select('id', 'name', 'role_id', 'email').from('users')
+}
+
+async function getOneUser(userId) {
+  return db('users').first('id', 'name', 'role_id', 'email').where('id', userId)
 }
 
 module.exports = {
   getUserByEmail,
-  getAllUsers
+  getAllUsers,
+  getOneUser
 }
