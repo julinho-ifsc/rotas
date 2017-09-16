@@ -2,18 +2,28 @@
 const {generateHash} = require('../server/core/password-hash')
 
 async function seed(knex) {
+  await knex('permissions').del()
+  await knex('users').del()
+  await knex('resources').del()
   await knex('roles').del()
+
   await knex('roles').insert([{name: 'admin'}, {name: 'user'}])
 
-  await knex('resources').del()
-  await knex('resources').insert({name: 'users'})
+  await knex('resources').insert([
+    {
+      name: 'users'
+    },
+    {
+      name: 'clients'
+    }
+  ])
 
   const roleAdmin = await knex('roles').first('id').where('name', 'admin')
   const roleUser = await knex('roles').first('id').where('name', 'user')
 
-  const resourceId = await knex('resources').first('id').where('name', 'users')
+  const userResourceId = await knex('resources').first('id').where('name', 'users')
+  const clientsResourceId = await knex('resources').first('id').where('name', 'clients')
 
-  await knex('users').del()
   await knex('users').insert([
     {
       role_id: roleAdmin.id,
@@ -29,10 +39,9 @@ async function seed(knex) {
     }
   ])
 
-  await knex('permissions').del()
   await knex('permissions').insert([
     {
-      resource_id: resourceId.id,
+      resource_id: userResourceId.id,
       role_id: roleAdmin.id,
       create: true,
       read: true,
@@ -40,7 +49,15 @@ async function seed(knex) {
       delete: true
     },
     {
-      resource_id: resourceId.id,
+      resource_id: clientsResourceId.id,
+      role_id: roleAdmin.id,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
+      resource_id: userResourceId.id,
       role_id: roleAdmin.id,
       create: false,
       read: true,

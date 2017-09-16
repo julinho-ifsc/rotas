@@ -4,6 +4,8 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const authRouter = require('./routers/auth')
 const usersRouter = require('./routers/users')
+const clientsRouter = require('./routers/clients')
+const {handleError} = require('./handlers/errors')
 
 const app = express()
 
@@ -13,7 +15,13 @@ if (process.NODE_ENV === 'development') {
 
 app.use(helmet())
 app.use(bodyParser.json())
+app.use((req, res, next) => {
+  res.set('Accept', 'application/json')
+  next()
+})
 app.use('/auth', authRouter)
 app.use('/users', usersRouter)
+app.use('/clients', clientsRouter)
+app.use(handleError)
 
 module.exports = app

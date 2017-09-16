@@ -1,18 +1,15 @@
 const usersService = require('../services/users')
 const {InvalidUserError, NotFoundError} = require('../core/errors')
 
-async function getAll(req, res) {
+async function getAll(req, res, next) {
   try {
     return res.json(await usersService.getAll())
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 
-async function getOne(req, res) {
+async function getOne(req, res, next) {
   try {
     const userId = req.params.userId
 
@@ -40,62 +37,47 @@ async function getOne(req, res) {
       })
     }
 
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 
-async function createUser(req, res) {
+async function createUser(req, res, next) {
   try {
     return res.status(501).json({
       message: 'Not implemented'
     })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 
-async function updateUser(req, res) {
+async function updateUser(req, res, next) {
   try {
     return res.status(501).json({
       message: 'Not implemented'
     })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 
-async function updateUserField(req, res) {
+async function updateUserField(req, res, next) {
   try {
     return res.status(501).json({
       message: 'Not implemented'
     })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 
-async function deleteUser(req, res) {
+async function deleteUser(req, res, next) {
   try {
     return res.status(501).json({
       message: 'Not implemented'
     })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 

@@ -1,7 +1,7 @@
 const {generateToken} = require('../services/auth')
 const {UnauthorizedUserError} = require('../core/errors')
 
-async function login(req, res) {
+async function login(req, res, next) {
   try {
     const {email, password} = req.body
     const token = await generateToken(email, password)
@@ -14,10 +14,7 @@ async function login(req, res) {
       })
     }
 
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 

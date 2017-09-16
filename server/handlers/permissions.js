@@ -20,10 +20,7 @@ const verifyPermission = resourceName => action => async (req, res, next) => {
 
     next()
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 }
 

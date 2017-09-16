@@ -21,6 +21,13 @@ async function isAuthorized({resourceId, roleId, action}) {
   return false
 }
 
+async function getAllPermissions(roleId) {
+  return db('permissions')
+    .select('create', 'read', 'update', 'delete', 'resource_id')
+    .where('role_id', roleId)
+}
+
 module.exports = {
-  isAuthorized
+  isAuthorized,
+  getAllPermissions
 }

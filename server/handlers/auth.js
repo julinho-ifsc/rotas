@@ -29,10 +29,7 @@ async function verifyAuthorization(req, res, next) {
       })
     }
 
-    console.error(err)
-    return res.status(500).json({
-      message: 'Internal Server Error'
-    })
+    next(err)
   }
 
   next()

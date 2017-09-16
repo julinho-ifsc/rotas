@@ -26,9 +26,17 @@ class NotFoundError extends Error {
   }
 }
 
+class InvalidClientPermissionsError extends Error {
+  constructor() {
+    super()
+    this.name = 'InvalidClientPermissionsError'
+  }
+}
+
 module.exports = {
   UnauthorizedUserError,
   AuthorizationTypeError,
   InvalidUserError,
-  NotFoundError
+  NotFoundError,
+  InvalidClientPermissionsError
 }
