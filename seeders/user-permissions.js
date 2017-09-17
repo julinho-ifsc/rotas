@@ -58,7 +58,7 @@ async function seed(knex) {
     },
     {
       resource_id: userResourceId.id,
-      role_id: roleAdmin.id,
+      role_id: roleUser.id,
       create: false,
       read: true,
       update: false,

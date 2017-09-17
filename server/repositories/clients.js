@@ -1,7 +1,7 @@
 const db = require('../config/database')
 
 async function createClient(name, key) {
-  return db('clients').returning('id').insert({name, key})
+  return db('clients').returning('id').insert({name, public_key: key})
 }
 
 async function addClientPermissions(clientId, permissions) {

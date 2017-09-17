@@ -10,7 +10,7 @@ async function createClient({name, key, permissions, resourceOwner}) {
     throw new InvalidClientPermissionsError()
   }
 
-  const id = await repository.createClient({name, key, permissions})
+  const [id] = await repository.createClient(name, key)
   await repository.addClientPermissions(id, permissions)
 
   return {

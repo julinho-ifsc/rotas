@@ -4,7 +4,7 @@ exports.up = function (knex) {
     table.increments().primary()
     table.timestamps(true, true)
     table.string('name').notNullable()
-    table.binary('key').notNullable()
+    table.binary('public_key').notNullable()
   })
 }
 

@@ -34,7 +34,7 @@ function clientHasValidPermissions(
 
     return Object.keys(resourceOwnerPermission).every(key => {
       if (
-        resourceOwnerPermission[key] === false &&
+        !resourceOwnerPermission[key] &&
         clientPermission[key] !== false
       ) {
         return false

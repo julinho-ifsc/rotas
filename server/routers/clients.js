@@ -8,42 +8,42 @@ const {validateSchema} = require('../handlers/schemas')
 // eslint-disable-next-line new-cap
 const router = express.Router()
 
-const verifyUsers = verifyPermission('clients')
+const verifyClients = verifyPermission('clients')
 
-// Router.get('/', [
-//   verifyAuthorization,
-//   verifyUsers('read'),
-//   clientsController.getAll
-// ])
+router.get('/', [
+  verifyAuthorization,
+  verifyClients('read'),
+  clientsController.getAll
+])
 
 // router.get('/:clientId', [
 //   verifyAuthorization,
-//   verifyUsers('read'),
+//   verifyClients('read'),
 //   clientsController.getOne
 // ])
 
 router.post('/', [
   verifyAuthorization,
-  verifyUsers('create'),
+  verifyClients('create'),
   validateSchema(newClientSchema),
   clientsController.createClient
 ])
 
 // Router.put('/:clientId', [
 //   verifyAuthorization,
-//   verifyUsers('update'),
+//   verifyClients('update'),
 //   clientsController.updateUser
 // ])
 
 // router.patch('/:clientId', [
 //   verifyAuthorization,
-//   verifyUsers('update'),
+//   verifyClients('update'),
 //   clientsController.updateUserField
 // ])
 
 // router.delete('/:clientId', [
 //   verifyAuthorization,
-//   verifyUsers('delete'),
+//   verifyClients('delete'),
 //   clientsController.deleteUser
 // ])
 
