@@ -45,7 +45,8 @@
       "jest"
     ],
     "rules": {
-      "strict": 2
+      "strict": 2,
+      "camelcase": 0
     },
     "space": true,
     "semicolon": false

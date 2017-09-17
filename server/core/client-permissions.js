@@ -1,4 +1,4 @@
-function reducePermissions(accumulator, currentValue, currentIndex) {
+function reducePermissions(accumulator, currentValue) {
   accumulator[currentValue.resource_id] = {
     create: currentValue.create,
     read: currentValue.read,
@@ -33,10 +33,7 @@ function clientHasValidPermissions(
     const clientPermission = clientReduced[index]
 
     return Object.keys(resourceOwnerPermission).every(key => {
-      if (
-        !resourceOwnerPermission[key] &&
-        clientPermission[key] !== false
-      ) {
+      if (!resourceOwnerPermission[key] && clientPermission[key] !== false) {
         return false
       }
       return true

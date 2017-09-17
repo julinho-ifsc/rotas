@@ -1,5 +1,5 @@
 /* eslint unicorn/filename-case: 0 */
-exports.up = function (knex, Promise) {
+exports.up = function (knex) {
   return knex.schema.createTable('clients_permission', table => {
     table.increments().primary()
     table.timestamps(true, true)

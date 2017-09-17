@@ -30,11 +30,13 @@ async function createClient(req, res, next) {
 async function getAll(req, res, next) {
   try {
     const publicKeys = await db('clients').select('public_key')
-    return res.json(publicKeys.map(key => {
-      key.public_key = key.public_key.toString('utf-8')
-      return key
-    }))
-  } catch(err) {
+    return res.json(
+      publicKeys.map(key => {
+        key.public_key = key.public_key.toString('utf-8')
+        return key
+      })
+    )
+  } catch (err) {
     next(err)
   }
 }

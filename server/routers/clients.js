@@ -16,7 +16,7 @@ router.get('/', [
   clientsController.getAll
 ])
 
-// router.get('/:clientId', [
+// Router.get('/:clientId', [
 //   verifyAuthorization,
 //   verifyClients('read'),
 //   clientsController.getOne

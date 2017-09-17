@@ -43,9 +43,14 @@ async function getOne(req, res, next) {
 
 async function createUser(req, res, next) {
   try {
-    return res.status(501).json({
-      message: 'Not implemented'
+    const {role_id, password, email, name} = req.body
+    const user = await usersService.createUser({
+      role: role_id,
+      password,
+      email,
+      name
     })
+    return res.status(201).json(user)
   } catch (err) {
     next(err)
   }
