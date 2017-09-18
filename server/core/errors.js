@@ -33,10 +33,18 @@ class InvalidClientPermissionsError extends Error {
   }
 }
 
+class InvalidPointError extends Error {
+  constructor() {
+    super()
+    this.name = 'InvalidPointError'
+  }
+}
+
 module.exports = {
   UnauthorizedUserError,
   AuthorizationTypeError,
   InvalidUserError,
   NotFoundError,
-  InvalidClientPermissionsError
+  InvalidClientPermissionsError,
+  InvalidPointError
 }

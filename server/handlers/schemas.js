@@ -8,6 +8,17 @@ const validateSchema = schema => (req, res, next) => {
     })
   }
 
+  if (
+    schema.type === 'object' &&
+    !Object.keys(req.body).every(key =>
+      Object.keys(schema.properties).includes(key)
+    )
+  ) {
+    return res.status(400).json({
+      message: 'Invalid schema'
+    })
+  }
+
   next()
 }
 
