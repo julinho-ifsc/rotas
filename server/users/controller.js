@@ -1,5 +1,5 @@
-const usersService = require('../services/users')
 const {InvalidUserError, NotFoundError} = require('../core/errors')
+const usersService = require('./service')
 
 async function getAll(req, res, next) {
   try {

@@ -1,7 +1,7 @@
 const express = require('express')
-const {loginSchema} = require('../schemas/auth')
 const {validateSchema} = require('../handlers/schemas')
-const authController = require('../controllers/auth')
+const {loginSchema} = require('./schemas')
+const authController = require('./controller')
 
 // eslint-disable-next-line new-cap
 const router = express.Router()

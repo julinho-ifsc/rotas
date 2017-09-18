@@ -2,8 +2,8 @@ const express = require('express')
 const {verifyAuthorization} = require('../handlers/auth')
 const {verifyPermission} = require('../handlers/permissions')
 const {validateSchema} = require('../handlers/schemas')
-const usersController = require('../controllers/users')
-const {newUserSchema} = require('../schemas/users')
+const usersController = require('./controller')
+const {newUserSchema, patchUserSchema} = require('./schemas')
 
 // eslint-disable-next-line new-cap
 const router = express.Router()
@@ -39,6 +39,7 @@ router.put('/:userId', [
 router.patch('/:userId', [
   verifyAuthorization,
   verifyUsers('update'),
+  validateSchema(patchUserSchema),
   usersController.updateUserField
 ])
 

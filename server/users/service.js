@@ -1,5 +1,5 @@
-const repository = require('../repositories/users')
 const {generateHash} = require('../core/password-hash')
+const repository = require('./repository')
 
 async function getAll() {
   return repository.getAllUsers()

@@ -1,5 +1,5 @@
-const {authenticate} = require('../services/auth')
 const {AuthorizationTypeError} = require('../core/errors')
+const {authenticate} = require('../auth/service')
 
 async function verifyAuthorization(req, res, next) {
   const token = req.get('Authorization')

@@ -1,6 +1,6 @@
-const db = require('../config/database')
-const service = require('../services/clients')
 const {InvalidClientPermissionsError} = require('../core/errors')
+const db = require('../config/database')
+const service = require('./service')
 
 async function createClient(req, res, next) {
   try {

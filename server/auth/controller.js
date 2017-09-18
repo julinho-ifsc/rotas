@@ -1,5 +1,5 @@
-const {generateToken} = require('../services/auth')
 const {UnauthorizedUserError} = require('../core/errors')
+const {generateToken} = require('./service')
 
 async function login(req, res, next) {
   try {

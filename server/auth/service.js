@@ -1,7 +1,7 @@
 const {UnauthorizedUserError} = require('../core/errors')
 const {signToken, verifyToken} = require('../core/token')
 const {verifyPassword} = require('../core/password-hash')
-const {getUserByEmail} = require('../repositories/users')
+const {getUserByEmail} = require('../users/repository')
 
 async function generateToken(email, password) {
   const user = await getUserByEmail(email)

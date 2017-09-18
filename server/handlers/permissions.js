@@ -1,5 +1,5 @@
-const {isAuthorized} = require('../repositories/permissions')
-const {getResourceIdByName} = require('../repositories/resources')
+const {isAuthorized} = require('../permissions/repository')
+const {getResourceIdByName} = require('../resources/repository')
 
 const verifyPermission = resourceName => action => async (req, res, next) => {
   const resource = await getResourceIdByName(resourceName)
