@@ -29,19 +29,20 @@ router.post('/', [
   usersController.createUser
 ])
 
-router.put('/:userID', [
+router.put('/:userId', [
   verifyAuthorization,
   verifyUsers('update'),
+  validateSchema(newUserSchema),
   usersController.updateUser
 ])
 
-router.patch('/:userID', [
+router.patch('/:userId', [
   verifyAuthorization,
   verifyUsers('update'),
   usersController.updateUserField
 ])
 
-router.delete('/:userID', [
+router.delete('/:userId', [
   verifyAuthorization,
   verifyUsers('delete'),
   usersController.deleteUser

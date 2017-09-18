@@ -16,21 +16,27 @@ async function getOneUser(userId) {
 }
 
 async function createUser({role, password, email, name}) {
-  const user = await db('users')
-    .returning(['id', 'role_id', 'email', 'name'])
-    .insert({
-      role_id: role,
-      password,
-      email,
-      name
-    })
-  console.log(user)
-  return user
+  return db('users').returning('id').insert({
+    role_id: role,
+    password,
+    email,
+    name
+  })
+}
+
+async function updateUser(id, body) {
+  return db('users').where('id', id).update(body)
+}
+
+async function deleteUser(id) {
+  return db('users').where('id', id).del()
 }
 
 module.exports = {
   getUserByEmail,
   getAllUsers,
   getOneUser,
-  createUser
+  createUser,
+  updateUser,
+  deleteUser
 }

@@ -20,6 +20,29 @@ const newUserSchema = {
   }
 }
 
+const patchUserSchema = {
+  type: 'object',
+  properties: {
+    role_id: {
+      type: 'number',
+      required: false
+    },
+    password: {
+      type: 'string',
+      required: false
+    },
+    email: {
+      type: 'string',
+      required: false
+    },
+    name: {
+      type: 'string',
+      required: false
+    }
+  }
+}
+
 module.exports = {
-  newUserSchema
+  newUserSchema,
+  patchUserSchema
 }
