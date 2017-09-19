@@ -40,11 +40,19 @@ class InvalidPointError extends Error {
   }
 }
 
+class InvalidRouteError extends Error {
+  constructor() {
+    super()
+    this.name = 'InvalidRouteError'
+  }
+}
+
 module.exports = {
   UnauthorizedUserError,
   AuthorizationTypeError,
   InvalidUserError,
   NotFoundError,
   InvalidClientPermissionsError,
-  InvalidPointError
+  InvalidPointError,
+  InvalidRouteError
 }

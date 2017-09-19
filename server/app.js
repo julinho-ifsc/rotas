@@ -6,7 +6,8 @@ const authRouter = require('./auth/router')
 const usersRouter = require('./users/router')
 const clientsRouter = require('./clients/router')
 const pointsRouter = require('./points/router')
-const {handleError} = require('./handlers/errors')
+const routesRouter = require('./routes/router')
+const {handleError, handleNotFound} = require('./handlers/errors')
 
 const app = express()
 
@@ -24,6 +25,8 @@ app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/clients', clientsRouter)
 app.use('/points', pointsRouter)
+app.use('/routes', routesRouter)
 app.use(handleError)
+app.use(handleNotFound)
 
 module.exports = app

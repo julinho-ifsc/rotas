@@ -1,11 +1,12 @@
 const {isAuthorized} = require('../permissions/repository')
 const {getResourceIdByName} = require('../resources/repository')
+const {UnauthorizedUserError} = require('../core/errors')
 
 const verifyPermission = resourceName => action => async (req, res, next) => {
-  const resource = await getResourceIdByName(resourceName)
-  const roleId = res.locals.userInfo.role
-
   try {
+    const resource = await getResourceIdByName(resourceName)
+
+    const roleId = res.locals.userInfo.role
     const userIsAuthorized = await isAuthorized({
       resourceId: resource.id,
       roleId,
@@ -13,13 +14,16 @@ const verifyPermission = resourceName => action => async (req, res, next) => {
     })
 
     if (userIsAuthorized === false) {
-      return res.status(401).json({
-        message: 'Unauthorized user'
-      })
+      throw new UnauthorizedUserError()
     }
 
     next()
   } catch (err) {
+    if (err.name === UnauthorizedUserError.name) {
+      return res.status(401).json({
+        message: 'Unauthorized user'
+      })
+    }
     next(err)
   }
 }

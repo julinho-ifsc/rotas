@@ -20,31 +20,39 @@ async function seed(knex) {
     },
     {
       name: 'points'
+    },
+    {
+      name: 'routes'
     }
   ])
 
-  const roleAdmin = await knex('roles').first('id').where('name', 'admin')
-  const roleUser = await knex('roles').first('id').where('name', 'user')
+  const {id: roleAdminId} = await knex('roles')
+    .first('id')
+    .where('name', 'admin')
+  const {id: roleUserId} = await knex('roles').first('id').where('name', 'user')
 
-  const userResourceId = await knex('resources')
+  const {id: userResourceId} = await knex('resources')
     .first('id')
     .where('name', 'users')
-  const clientsResourceId = await knex('resources')
+  const {id: clientsResourceId} = await knex('resources')
     .first('id')
     .where('name', 'clients')
-  const pointsResourceId = await knex('resources')
+  const {id: pointsResourceId} = await knex('resources')
     .first('id')
     .where('name', 'points')
+  const {id: routesResourceId} = await knex('resources')
+    .first('id')
+    .where('name', 'routes')
 
   await knex('users').insert([
     {
-      role_id: roleAdmin.id,
+      role_id: roleAdminId,
       password: await generateHash('adminpassword123'),
       email: 'admin@example.com',
       name: 'Admin'
     },
     {
-      role_id: roleUser.id,
+      role_id: roleUserId,
       password: await generateHash('userpassword123'),
       email: 'user@example.com',
       name: 'User'
@@ -53,32 +61,40 @@ async function seed(knex) {
 
   await knex('permissions').insert([
     {
-      resource_id: userResourceId.id,
-      role_id: roleAdmin.id,
+      resource_id: userResourceId,
+      role_id: roleAdminId,
       create: true,
       read: true,
       update: true,
       delete: true
     },
     {
-      resource_id: clientsResourceId.id,
-      role_id: roleAdmin.id,
+      resource_id: clientsResourceId,
+      role_id: roleAdminId,
       create: true,
       read: true,
       update: true,
       delete: true
     },
     {
-      resource_id: pointsResourceId.id,
-      role_id: roleAdmin.id,
+      resource_id: pointsResourceId,
+      role_id: roleAdminId,
       create: true,
       read: true,
       update: true,
       delete: true
     },
     {
-      resource_id: userResourceId.id,
-      role_id: roleUser.id,
+      resource_id: routesResourceId,
+      role_id: roleAdminId,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
+      resource_id: userResourceId,
+      role_id: roleUserId,
       create: false,
       read: true,
       update: false,

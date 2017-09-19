@@ -6,6 +6,13 @@ function handleError(err, req, res, next) {
   })
 }
 
+function handleNotFound(req, res) {
+  res.status(404).json({
+    message: 'Not found'
+  })
+}
+
 module.exports = {
-  handleError
+  handleError,
+  handleNotFound
 }
