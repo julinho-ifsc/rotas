@@ -8,7 +8,8 @@
     "lint": "xo --fix",
     "test:unit:watch": "ava test/unit/**/*.js -w --color",
     "precommit": "lint-staged",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build:docs": "aglio -i api.apib -o docs/index.html"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/julinho-ifsc/rotas#readme",
   "devDependencies": {
+    "aglio": "^2.3.0",
     "ava": "^0.22.0",
     "husky": "^0.14.3",
     "is-jwt": "^1.0.0",
