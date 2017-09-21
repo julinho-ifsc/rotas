@@ -34,8 +34,21 @@ async function deleteOne(id) {
   return db('routes').where('id', id).del()
 }
 
+async function createRoute({name, points}) {
+  const [routeId] = await db('routes').insert({name}).returning('id')
+  await db('routes_point').insert(
+    points.map((point, index) => ({
+      route_id: routeId,
+      point_id: point,
+      position: index
+    }))
+  )
+  return routeId
+}
+
 module.exports = {
   getAll,
   getOne,
-  deleteOne
+  deleteOne,
+  createRoute
 }

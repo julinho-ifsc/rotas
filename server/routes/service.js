@@ -39,7 +39,13 @@ async function getOne(id) {
   }, {})
 }
 
+async function createRoute({name, points}) {
+  const id = await routesRepository.createRoute({name, points})
+  return getOne(id)
+}
+
 module.exports = {
   getAll,
-  getOne
+  getOne,
+  createRoute
 }

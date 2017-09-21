@@ -9,7 +9,10 @@
     "test:unit:watch": "ava test/unit/**/*.js -w --color",
     "precommit": "lint-staged",
     "start": "node index.js",
-    "build:docs": "aglio -i api.apib -o docs/index.html"
+    "build:docs": "aglio -i api.apib -o docs/index.html",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run"
   },
   "repository": {
     "type": "git",

@@ -2,10 +2,10 @@ const {AuthorizationTypeError} = require('../core/errors')
 const {authenticate} = require('../auth/service')
 
 async function verifyAuthorization(req, res, next) {
-  const token = req.get('Authorization')
-
   try {
-    if (!token.startsWith('Bearer')) {
+    const token = req.get('Authorization')
+
+    if (!token || !token.startsWith('Bearer')) {
       throw new AuthorizationTypeError()
     }
 

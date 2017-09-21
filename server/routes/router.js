@@ -1,9 +1,9 @@
 const express = require('express')
 const {verifyAuthorization} = require('../handlers/auth')
 const {verifyPermission} = require('../handlers/permissions')
-// Const {validateSchema} = require('../handlers/schemas')
+const {validateSchema} = require('../handlers/schemas')
 const routesController = require('./controller')
-// Const {newPointSchema, patchPointSchema} = require('./schemas')
+const {newRouteSchema} = require('./schemas')
 
 // eslint-disable-next-line new-cap
 const router = express.Router()
@@ -22,17 +22,17 @@ router.get('/:routeId', [
   routesController.getOne
 ])
 
-// Router.post('/', [
-//   verifyAuthorization,
-//   verifyRoutes('create'),
-//   validateSchema(newPointSchema),
-//   routesController.createRoute
-// ])
+router.post('/', [
+  verifyAuthorization,
+  verifyRoutes('create'),
+  validateSchema(newRouteSchema),
+  routesController.createRoute
+])
 
-// router.put('/:routeId', [
+// Router.put('/:routeId', [
 //   verifyAuthorization,
 //   verifyRoutes('update'),
-//   validateSchema(newPointSchema),
+//   validateSchema(newRouteSchema),
 //   routesController.updateRoute
 // ])
 

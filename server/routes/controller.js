@@ -64,8 +64,19 @@ async function deleteOne(req, res, next) {
   }
 }
 
+async function createRoute(req, res, next) {
+  try {
+    const {name, points} = req.body
+    const route = await routesService.createRoute({name, points})
+    return res.json(route)
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   getAll,
   getOne,
-  deleteOne
+  deleteOne,
+  createRoute
 }
