@@ -34,21 +34,32 @@ async function deleteOne(id) {
   return db('routes').where('id', id).del()
 }
 
-async function createRoute({name, points}) {
-  const [routeId] = await db('routes').insert({name}).returning('id')
-  await db('routes_point').insert(
+async function insertPointsByRoute(routeId, points) {
+  return db('routes_point').insert(
     points.map((point, index) => ({
       route_id: routeId,
       point_id: point,
       position: index
     }))
   )
+}
+
+async function createRoute({name, points}) {
+  const [routeId] = await db('routes').insert({name}).returning('id')
+  await insertPointsByRoute(routeId, points)
   return routeId
+}
+
+async function updateRoute(id, {name, points}) {
+  await db('routes').update({name}).where('id', id)
+  await db('routes_point').where('route_id', id).del()
+  await insertPointsByRoute(id, points)
 }
 
 module.exports = {
   getAll,
   getOne,
   deleteOne,
-  createRoute
+  createRoute,
+  updateRoute
 }

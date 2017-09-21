@@ -74,9 +74,35 @@ async function createRoute(req, res, next) {
   }
 }
 
+async function updateRoute(req, res, next) {
+  try {
+    const routeId = req.params.routeId
+
+    if (isNaN(routeId)) {
+      throw new InvalidRouteError()
+    }
+
+    const {name, points} = req.body
+    const route = await routesService.updateRoute(Number(routeId), {
+      name,
+      points
+    })
+    return res.json(route)
+  } catch (err) {
+    if (err.name === InvalidRouteError.name) {
+      return res.status(400).json({
+        message: 'Invalid route id'
+      })
+    }
+
+    next(err)
+  }
+}
+
 module.exports = {
   getAll,
   getOne,
   deleteOne,
-  createRoute
+  createRoute,
+  updateRoute
 }

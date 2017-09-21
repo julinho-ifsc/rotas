@@ -29,14 +29,14 @@ router.post('/', [
   routesController.createRoute
 ])
 
-// Router.put('/:routeId', [
-//   verifyAuthorization,
-//   verifyRoutes('update'),
-//   validateSchema(newRouteSchema),
-//   routesController.updateRoute
-// ])
+router.put('/:routeId', [
+  verifyAuthorization,
+  verifyRoutes('update'),
+  validateSchema(newRouteSchema),
+  routesController.updateRoute
+])
 
-// router.patch('/:routeId', [
+// Router.patch('/:routeId', [
 //   verifyAuthorization,
 //   verifyRoutes('update'),
 //   validateSchema(patchPointSchema),

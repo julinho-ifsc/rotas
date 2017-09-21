@@ -44,8 +44,14 @@ async function createRoute({name, points}) {
   return getOne(id)
 }
 
+async function updateRoute(id, {name, points}) {
+  await routesRepository.updateRoute(id, {name, points})
+  return getOne(id)
+}
+
 module.exports = {
   getAll,
   getOne,
-  createRoute
+  createRoute,
+  updateRoute
 }
