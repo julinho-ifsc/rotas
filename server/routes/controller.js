@@ -1,9 +1,10 @@
 const {InvalidRouteError, NotFoundError} = require('../core/errors')
-const routesService = require('./service')
+const RoutesService = require('./service')
 const routesRepository = require('./repository')
 
 async function getAll(req, res, next) {
   try {
+    const routesService = new RoutesService(res.locals.databaseConnection)
     return res.json(await routesService.getAll())
   } catch (err) {
     next(err)
@@ -18,6 +19,7 @@ async function getOne(req, res, next) {
       throw new InvalidRouteError()
     }
 
+    const routesService = new RoutesService(res.locals.databaseConnection)
     const route = await routesService.getOne(Number(routeId))
 
     if (!route) {
@@ -67,6 +69,8 @@ async function deleteOne(req, res, next) {
 async function createRoute(req, res, next) {
   try {
     const {name, points} = req.body
+
+    const routesService = new RoutesService(res.locals.databaseConnection)
     const route = await routesService.createRoute({name, points})
     return res.json(route)
   } catch (err) {
@@ -83,6 +87,8 @@ async function updateRoute(req, res, next) {
     }
 
     const {name, points} = req.body
+
+    const routesService = new RoutesService(res.locals.databaseConnection)
     const route = await routesService.updateRoute(Number(routeId), {
       name,
       points

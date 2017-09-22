@@ -1,46 +1,56 @@
 const {generateHash} = require('../core/password-hash')
-const repository = require('./repository')
+const UsersRepository = require('./repository')
 
-async function getAll() {
-  return repository.getAllUsers()
-}
-
-async function getOne(userId) {
-  return repository.getOneUser(userId)
-}
-
-async function createUser({role, password, email, name}) {
-  const hashedPassword = await generateHash(password)
-  return repository.createUser({role, password: hashedPassword, email, name})
-}
-
-async function updateUser(id, {role_id, password, email, name}) {
-  const hashedPassword = await generateHash(password)
-  return repository.updateUser(id, {
-    role_id,
-    password: hashedPassword,
-    email,
-    name
-  })
-}
-
-async function updateUserField(id, body) {
-  if (Object.prototype.hasOwnProperty.call(body, 'password')) {
-    body.password = await generateHash(body.password)
+class UsersService {
+  constructor(db) {
+    this.db = db
   }
 
-  return repository.updateUser(id, body)
+  async getAll() {
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.getAllUsers()
+  }
+
+  async getOne(userId) {
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.getOneUser(userId)
+  }
+
+  async createUser({role, password, email, name}) {
+    const hashedPassword = await generateHash(password)
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.createUser({
+      role,
+      password: hashedPassword,
+      email,
+      name
+    })
+  }
+
+  async updateUser(id, {role_id, password, email, name}) {
+    const hashedPassword = await generateHash(password)
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.updateUser(id, {
+      role_id,
+      password: hashedPassword,
+      email,
+      name
+    })
+  }
+
+  async updateUserField(id, body) {
+    if (Object.prototype.hasOwnProperty.call(body, 'password')) {
+      body.password = await generateHash(body.password)
+    }
+
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.updateUser(id, body)
+  }
+
+  async deleteUser(id) {
+    const usersRepository = new UsersRepository(this.db)
+    return usersRepository.deleteUser(id)
+  }
 }
 
-async function deleteUser(id) {
-  return repository.deleteUser(id)
-}
-
-module.exports = {
-  getAll,
-  getOne,
-  createUser,
-  updateUser,
-  updateUserField,
-  deleteUser
-}
+module.exports = UsersService

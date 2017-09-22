@@ -1,5 +1,5 @@
 const {AuthorizationTypeError} = require('../core/errors')
-const {authenticate} = require('../auth/service')
+const {verifyToken} = require('../core/token')
 
 async function verifyAuthorization(req, res, next) {
   try {
@@ -9,7 +9,7 @@ async function verifyAuthorization(req, res, next) {
       throw new AuthorizationTypeError()
     }
 
-    res.locals.userInfo = await authenticate(token.replace('Bearer ', ''))
+    res.locals.userInfo = await verifyToken(token.replace('Bearer ', ''))
   } catch (err) {
     if (err.name === AuthorizationTypeError.name) {
       return res.status(401).json({

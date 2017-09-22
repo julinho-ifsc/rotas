@@ -1,8 +1,9 @@
 const {InvalidPointError, NotFoundError} = require('../core/errors')
-const pointsRepository = require('./repository')
+const PointsRepository = require('./repository')
 
 async function getAll(req, res, next) {
   try {
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     return res.json(await pointsRepository.getAll())
   } catch (err) {
     next(err)
@@ -17,6 +18,7 @@ async function getOne(req, res, next) {
       throw new InvalidPointError()
     }
 
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     const point = await pointsRepository.getOne(Number(pointId))
 
     if (!point) {
@@ -44,6 +46,7 @@ async function getOne(req, res, next) {
 async function createPoint(req, res, next) {
   try {
     const {rfid, name} = req.body
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     const [pointId] = await pointsRepository.createPoint(rfid, name)
 
     return res.json({
@@ -64,6 +67,7 @@ async function deletePoint(req, res, next) {
       throw new InvalidPointError()
     }
 
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     await pointsRepository.deletePoint(pointId)
     return res.status(204).send()
   } catch (err) {
@@ -86,6 +90,7 @@ async function updatePoint(req, res, next) {
     }
 
     const {rfid, name} = req.body
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     await pointsRepository.updatePoint(Number(pointId), {
       rfid,
       name
@@ -114,6 +119,7 @@ async function updatePointField(req, res, next) {
       throw new InvalidPointError()
     }
 
+    const pointsRepository = new PointsRepository(res.locals.databaseConnection)
     await pointsRepository.updatePoint(Number(pointId), req.body)
     const point = await pointsRepository.getOne(Number(pointId))
 

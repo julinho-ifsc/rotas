@@ -1,9 +1,11 @@
-const db = require('../config/database')
+class ResourcesRepository {
+  constructor(db) {
+    this.db = db
+  }
 
-async function getResourceIdByName(name) {
-  return db.first('id').from('resources').where('name', name)
+  async getResourceIdByName(name) {
+    return this.db('resources').first('id').where('name', name)
+  }
 }
 
-module.exports = {
-  getResourceIdByName
-}
+module.exports = ResourcesRepository

@@ -1,13 +1,19 @@
-const {isAuthorized} = require('../permissions/repository')
-const {getResourceIdByName} = require('../resources/repository')
+const PermissionsRepository = require('../permissions/repository')
+const ResourcesRepository = require('../resources/repository')
 const {UnauthorizedUserError} = require('../core/errors')
 
 const verifyPermission = resourceName => action => async (req, res, next) => {
   try {
-    const resource = await getResourceIdByName(resourceName)
+    const resourcesRepository = new ResourcesRepository(
+      res.locals.databaseConnection
+    )
+    const resource = await resourcesRepository.getResourceIdByName(resourceName)
 
     const roleId = res.locals.userInfo.role
-    const userIsAuthorized = await isAuthorized({
+    const permissionsRepository = new PermissionsRepository(
+      res.locals.databaseConnection
+    )
+    const userIsAuthorized = await permissionsRepository.isAuthorized({
       resourceId: resource.id,
       roleId,
       action

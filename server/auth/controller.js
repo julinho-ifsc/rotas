@@ -1,10 +1,13 @@
 const {UnauthorizedUserError} = require('../core/errors')
-const {generateToken} = require('./service')
+const AuthenticationService = require('./service')
 
 async function login(req, res, next) {
   try {
     const {email, password} = req.body
-    const token = await generateToken(email, password)
+    const authenticationService = new AuthenticationService(
+      res.locals.databaseConnection
+    )
+    const token = await authenticationService.generateToken(email, password)
 
     return res.json({token})
   } catch (err) {

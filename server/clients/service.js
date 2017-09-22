@@ -1,26 +1,33 @@
 const {clientHasValidPermissions} = require('../core/client-permissions')
 const {InvalidClientPermissionsError} = require('../core/errors')
-const {getAllPermissions} = require('../permissions/repository')
-const repository = require('./repository')
+const PermissionsRespository = require('../permissions/repository')
+const ClientsRepository = require('./repository')
 
-async function createClient({name, key, permissions, resourceOwner}) {
-  const resourceOwnerPermissions = await getAllPermissions(resourceOwner)
-
-  if (!clientHasValidPermissions(resourceOwnerPermissions, permissions)) {
-    throw new InvalidClientPermissionsError()
+class ClientsService {
+  constructor(db) {
+    this.db = db
   }
 
-  const [id] = await repository.createClient(name, key)
-  await repository.addClientPermissions(id, permissions)
+  async createClient({name, key, permissions, resourceOwner}) {
+    const permissionsRespository = new PermissionsRespository(this.db)
+    const resourceOwnerPermissions = await permissionsRespository.getAllPermissions(
+      resourceOwner
+    )
 
-  return {
-    id,
-    name,
-    key,
-    permissions
+    if (!clientHasValidPermissions(resourceOwnerPermissions, permissions)) {
+      throw new InvalidClientPermissionsError()
+    }
+    const clientsRepository = new ClientsRepository(this.db)
+    const [id] = await clientsRepository.createClient(name, key)
+    await clientsRepository.addClientPermissions(id, permissions)
+
+    return {
+      id,
+      name,
+      key,
+      permissions
+    }
   }
 }
 
-module.exports = {
-  createClient
-}
+module.exports = ClientsService

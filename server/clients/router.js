@@ -10,11 +10,11 @@ const router = express.Router()
 
 const verifyClients = verifyPermission('clients')
 
-router.get('/', [
-  verifyAuthorization,
-  verifyClients('read'),
-  clientsController.getAll
-])
+// Router.get('/', [
+//   verifyAuthorization,
+//   verifyClients('read'),
+//   clientsController.getAll
+// ])
 
 // Router.get('/:clientId', [
 //   verifyAuthorization,

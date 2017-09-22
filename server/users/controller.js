@@ -1,8 +1,9 @@
 const {InvalidUserError, NotFoundError} = require('../core/errors')
-const usersService = require('./service')
+const UsersService = require('./service')
 
 async function getAll(req, res, next) {
   try {
+    const usersService = new UsersService(res.locals.databaseConnection)
     return res.json(await usersService.getAll())
   } catch (err) {
     next(err)
@@ -17,6 +18,7 @@ async function getOne(req, res, next) {
       throw new InvalidUserError()
     }
 
+    const usersService = new UsersService(res.locals.databaseConnection)
     const user = await usersService.getOne(Number(userId))
 
     if (!user) {
@@ -44,6 +46,7 @@ async function getOne(req, res, next) {
 async function createUser(req, res, next) {
   try {
     const {role_id, password, email, name} = req.body
+    const usersService = new UsersService(res.locals.databaseConnection)
     const [userId] = await usersService.createUser({
       role: role_id,
       password,
@@ -70,6 +73,7 @@ async function updateUser(req, res, next) {
     }
 
     const {role_id, password, email, name} = req.body
+    const usersService = new UsersService(res.locals.databaseConnection)
     await usersService.updateUser(Number(userId), {
       role_id,
       password,
@@ -101,6 +105,7 @@ async function updateUserField(req, res, next) {
       throw new InvalidUserError()
     }
 
+    const usersService = new UsersService(res.locals.databaseConnection)
     await usersService.updateUserField(Number(userId), req.body)
     const user = await usersService.getOne(Number(userId))
 
@@ -134,6 +139,7 @@ async function deleteUser(req, res, next) {
       throw new InvalidUserError()
     }
 
+    const usersService = new UsersService(res.locals.databaseConnection)
     await usersService.deleteUser(Number(userId))
 
     return res.status(204).send()

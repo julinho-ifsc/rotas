@@ -1,12 +1,12 @@
 const {InvalidClientPermissionsError} = require('../core/errors')
-const db = require('../config/database')
-const service = require('./service')
+const ClientsService = require('./service')
 
 async function createClient(req, res, next) {
   try {
     const {name, key, permissions} = req.body
     const resourceOwner = res.locals.userInfo.role
-    const client = await service.createClient({
+    const clientsService = new ClientsService(res.locals.databaseConnection)
+    const client = await clientsService.createClient({
       name,
       key,
       permissions,
@@ -27,21 +27,6 @@ async function createClient(req, res, next) {
   }
 }
 
-async function getAll(req, res, next) {
-  try {
-    const publicKeys = await db('clients').select('public_key')
-    return res.json(
-      publicKeys.map(key => {
-        key.public_key = key.public_key.toString('utf-8')
-        return key
-      })
-    )
-  } catch (err) {
-    next(err)
-  }
-}
-
 module.exports = {
-  createClient,
-  getAll
+  createClient
 }
