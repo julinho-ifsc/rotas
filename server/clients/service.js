@@ -28,6 +28,12 @@ class ClientsService {
       permissions
     }
   }
+
+  async deleteClient(clientId) {
+    const clientsRepository = new ClientsRepository(this.db)
+    await clientsRepository.deleteClientPermissions(clientId)
+    await clientsRepository.deleteClient(clientId)
+  }
 }
 
 module.exports = ClientsService

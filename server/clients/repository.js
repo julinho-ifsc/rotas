@@ -15,6 +15,14 @@ class ClientsRepository {
       })
     )
   }
+
+  async deleteClientPermissions(clientId) {
+    return this.db('clients_permission').where('client_id', clientId).del()
+  }
+
+  async deleteClient(clientId) {
+    return this.db('clients').where('id', clientId).del()
+  }
 }
 
 module.exports = ClientsRepository

@@ -47,6 +47,13 @@ class InvalidRouteError extends Error {
   }
 }
 
+class InvalidClientError extends Error {
+  constructor() {
+    super()
+    this.name = 'InvalidClientError'
+  }
+}
+
 module.exports = {
   UnauthorizedUserError,
   AuthorizationTypeError,
@@ -54,5 +61,6 @@ module.exports = {
   NotFoundError,
   InvalidClientPermissionsError,
   InvalidPointError,
-  InvalidRouteError
+  InvalidRouteError,
+  InvalidClientError
 }
