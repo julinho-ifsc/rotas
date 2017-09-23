@@ -10,7 +10,18 @@ const newRouteSchema = {
       type: 'array',
       required: true,
       items: {
-        type: 'number'
+        type: 'object',
+        properties: {
+          point: {
+            type: 'number',
+            required: true
+          },
+          action: {
+            type: 'string',
+            required: true,
+            maxLength: 1
+          }
+        }
       }
     }
   }
@@ -20,9 +31,23 @@ const patchRouteSchema = {
   type: 'object',
   required: true,
   properties: {
-    rfid: {
-      type: 'string',
-      required: false
+    points: {
+      type: 'array',
+      required: false,
+      items: {
+        type: 'object',
+        properties: {
+          point: {
+            type: 'number',
+            required: true
+          },
+          action: {
+            type: 'string',
+            required: true,
+            maxLength: 1
+          }
+        }
+      }
     },
     name: {
       type: 'string',

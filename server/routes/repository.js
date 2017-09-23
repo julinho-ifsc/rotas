@@ -13,6 +13,7 @@ class RoutesRepository {
         'points.id as point',
         'points.rfid as rfid',
         'routes_point.position',
+        'routes_point.action',
         'points.name as pointName'
       )
   }
@@ -27,6 +28,7 @@ class RoutesRepository {
         'points.id as point',
         'points.rfid as rfid',
         'routes_point.position',
+        'routes_point.action',
         'points.name as pointName'
       )
       .where('routes.id', id)
@@ -41,8 +43,9 @@ class RoutesRepository {
     return this.db('routes_point').insert(
       points.map((point, index) => ({
         route_id: routeId,
-        point_id: point,
-        position: index
+        point_id: point.point,
+        position: index,
+        action: point.action
       }))
     )
   }

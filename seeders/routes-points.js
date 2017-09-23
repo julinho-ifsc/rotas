@@ -21,25 +21,29 @@ async function seed(knex) {
   await knex('routes_point').insert({
     route_id: firstRouteId,
     point_id: classroomId,
-    position: 0
+    position: 0,
+    action: 'd'
   })
 
   await knex('routes_point').insert({
     route_id: firstRouteId,
     point_id: libraryId,
-    position: 1
+    position: 1,
+    action: 'e'
   })
 
   await knex('routes_point').insert({
     route_id: secondRouteId,
     point_id: classroomId,
-    position: 1
+    position: 1,
+    action: 'p'
   })
 
   await knex('routes_point').insert({
     route_id: secondRouteId,
     point_id: libraryId,
-    position: 0
+    position: 0,
+    action: 'f'
   })
 }
 
