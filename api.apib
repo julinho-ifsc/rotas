@@ -3,11 +3,38 @@ FORMAT: 1A
 # Rotas
 Documentação da api de rotas do julinho.
 
+# Group Autenticação
+Recurso de autenticação. Use esse endpoint para receber que token [jwt](https://jwt.io/) válido, necessário para consumir os outros recursos da api. Cada token tem um tempo de expiração de 2 horas. Após esse tempo é necessário repetir o processo de autenticação.
+
+## Autenticação [/auth]
+
++ Request (application/json)
+
+        {
+            "email": "admin@example.com",
+            "password": "adminpassword123"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoyMSwibmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlhdCI6MTUwNjE4MTk1NSwiZXhwIjoxNTA2MTg5MTU1fQ.kGS_fafRIY3LX0Oe4dIuLikfVqYgN1TILZd9F-QKlcUk6PgstGTxEq97LdLOQy1PdSfYZwrNF5eFvl_7ru96_IYdx9c3ig3uep_Th9F17OJ4cjHnrZ-q4L44yct97N3PEC_ybswMtS0stvAwEnKIOzNzE4yUoW-sY1tYphB4Wb78SigSK0-0E-ydsBCazMlRPEG4UFoOuvtmND4kzoFTPmURqKYxxmEe99qNDeVu_tWkf8-0LjdKfHUDCA1wO1wNlMG65yjHrpCP5qLmr269iTBabDRotlo6ZB4mNw1IK3A50eh70wk18e7bq8vXZMFTrM3mcbjWUryKmOLkwfsW55-J37meoyL9tkjXa8O4HLMbR0pon9QvdLhbxYEJCB7fFGNklp-yQmn_hYaPj0fc-K4LZuQ1I0wU_HG2DRNQlKKoGlo8sg-CSWsEOe_6pVuiUqFukPc1hvDP2txSpvILD1gP87HGQ5lEu4CCPZB9tIwYlQ_ljI6reC-EqGz5XHfBP135XvFLehRn-j0HKr7d7U4RpO8S0fmnNHBdpLixUXxXUzRqszoXf0A7rC3IiwYtr8Ew-WKlEjtxiRJP_zRp1UMRYiOxDHSYN3d6a48RGX7yid5JaPhzjnZdtrPMo3XyOD-bNHCA_R1UnWv_nxLBmxDbpBepWWsTy8_ueaHzc7Q"
+        }
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
 # Group Rotas
 
 Recursos relacionados às rotas na API.
 
 ## Coleção de Rotas [/routes]
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
 
 ### Lista todas as rotas [GET]
 
@@ -15,61 +42,354 @@ Recursos relacionados às rotas na API.
 
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2014-11-11T08:40:51.620Z",
-                "url": "/questions/1",
-                "choices": [
+                "id": 12,
+                "name": "firstRoute",
+                "points": [
                     {
-                        "choice": "Swift",
-                        "url": "/questions/1/choices/1",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "url": "/questions/1/choices/2",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "url": "/questions/1/choices/3",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "url": "/questions/1/choices/4",
-                        "votes": 256
+                        "id": 22,
+                        "name": "classroom",
+                        "rfid": "123456789",
+                        "action": "d"
+                    },
+                    {
+                        "id": 21,
+                        "name": "library",
+                        "rfid": "123456",
+                        "action": "e"
+                    }
+                ]
+            },
+            {
+                "id": 13,
+                "name": "secondRoute",
+                "points": [
+                    {
+                        "id": 21,
+                        "name": "library",
+                        "rfid": "123456",
+                        "action": "f"
+                    },
+                    {
+                        "id": 22,
+                        "name": "classroom",
+                        "rfid": "123456789",
+                        "action": "p"
                     }
                 ]
             }
         ]
 
-## Rotas [/routes/{user_id}]
++ Response 401 (application/json)
+
+        {
+            "message": "Wrong authorization type"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Expired token"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Unauthorized user"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "Not found"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+
+### Cria uma rota [POST]
+
++ Request (application/json)
+
+        {
+            "name": "rota massa",
+            "points": [
+                {
+                    "point": 22,
+                    "action": "d"
+                },
+                {
+                    "point": 21,
+                    "action": "e"
+                }
+            ]
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 2,
+            "name": "rota massa",
+            "points": [
+                {
+                    "id": 22,
+                    "name": "classroom",
+                    "rfid": "123456789",
+                    "action": "d"
+                },
+                {
+                    "id": 21,
+                    "name": "library",
+                    "rfid": "123456",
+                    "action": "e"
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Wrong authorization type"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Expired token"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Unauthorized user"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "Not found"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+
+## Rotas [/routes/{rota_id}]
 
 + Parameters
-    + user_id: `1` (string) - A id de uma rota.
+    + rota_id: `1` (string) - A id de uma rota.
 
-### Consulta as informação de uma rota [GET]
+### Consulta as informações de uma rota [GET]
 
 + Response 200 (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "published_at": "2014-11-11T08:40:51.620Z",
-            "url": "/questions/1",
-            "choices": [
+            "id": 1,
+            "name": "firstRoute",
+            "points": [
                 {
-                    "choice": "Swift",
-                    "url": "/questions/1/choices/1",
-                    "votes": 2048
-                }, {
-                    "choice": "Python",
-                    "url": "/questions/1/choices/2",
-                    "votes": 1024
-                }, {
-                    "choice": "Objective-C",
-                    "url": "/questions/1/choices/3",
-                    "votes": 512
-                }, {
-                    "choice": "Ruby",
-                    "url": "/questions/1/choices/4",
-                    "votes": 256
+                    "id": 22,
+                    "name": "classroom",
+                    "rfid": "123456789",
+                    "action": "d"
+                },
+                {
+                    "id": 21,
+                    "name": "library",
+                    "rfid": "123456",
+                    "action": "e"
                 }
             ]
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid route id"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Wrong authorization type"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Expired token"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Unauthorized user"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "Not found"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+
+
+### Altera as informações de uma rota [PUT]
+
++ Request (application/json)
+
+        {
+            "id": 1,
+            "name": "pow",
+            "points": [
+                {
+                    "point": 22,
+                    "action": "d"
+                },
+                {
+                    "point": 21,
+                    "action": "f"
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "pow",
+            "points": [
+                {
+                    "id": 22,
+                    "name": "classroom",
+                    "rfid": "123456789",
+                    "action": "d"
+                },
+                {
+                    "id": 21,
+                    "name": "library",
+                    "rfid": "123456",
+                    "action": "f"
+                }
+            ]
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid route id"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Wrong authorization type"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Expired token"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Unauthorized user"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "Not found"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+
+
+### Deleta uma rota [DELETE]
+
++ Response 200 (application/json)
+
+        {
+            "message": "Route 1 deleted with success"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid route id"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Wrong authorization type"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Expired token"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "message": "Unauthorized user"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Invalid schema"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "message": "Not found"
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
         }

@@ -36,13 +36,6 @@ router.put('/:routeId', [
   routesController.updateRoute
 ])
 
-// Router.patch('/:routeId', [
-//   verifyAuthorization,
-//   verifyRoutes('update'),
-//   validateSchema(patchPointSchema),
-//   routesController.updateRouteField
-// ])
-
 router.delete('/:routeId', [
   verifyAuthorization,
   verifyRoutes('delete'),

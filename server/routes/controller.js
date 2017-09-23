@@ -54,7 +54,9 @@ async function deleteOne(req, res, next) {
 
     await routesRepository.deleteOne(Number(routeId))
 
-    return res.status(204).send()
+    return res.status(200).json({
+      message: `Route ${routeId} deleted with success`
+    })
   } catch (err) {
     if (err.name === InvalidRouteError.name) {
       return res.status(400).json({
@@ -72,7 +74,7 @@ async function createRoute(req, res, next) {
 
     const routesService = new RoutesService(res.locals.databaseConnection)
     const route = await routesService.createRoute({name, points})
-    return res.json(route)
+    return res.status(201).json(route)
   } catch (err) {
     next(err)
   }
