@@ -17,8 +17,8 @@ async function signToken(data) {
   })
 }
 
-async function verifyToken(token) {
-  return verify(token, publicKey, {algorithms: [algorithm]})
+async function verifyToken(token, key = publicKey) {
+  return verify(token, key, {algorithms: [algorithm]})
 }
 
 module.exports = {

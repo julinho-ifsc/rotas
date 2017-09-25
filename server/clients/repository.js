@@ -23,6 +23,13 @@ class ClientsRepository {
   async deleteClient(clientId) {
     return this.db('clients').where('id', clientId).del()
   }
+
+  async getPublicKey(clientId) {
+    const {public_key: publicKey} = await this.db('clients')
+      .where('id', clientId)
+      .first('public_key')
+    return publicKey
+  }
 }
 
 module.exports = ClientsRepository

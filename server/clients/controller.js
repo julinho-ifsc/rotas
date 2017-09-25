@@ -1,11 +1,16 @@
 const {
   InvalidClientPermissionsError,
-  InvalidClientError
+  InvalidClientError,
+  UnauthorizedUserError
 } = require('../core/errors')
 const ClientsService = require('./service')
 
 async function createClient(req, res, next) {
   try {
+    if (!Object.prototype.hasOwnProperty.call(res.locals, 'userInfo')) {
+      throw new UnauthorizedUserError()
+    }
+
     const {name, key, permissions} = req.body
     const resourceOwner = res.locals.userInfo.role
     const clientsService = new ClientsService(res.locals.databaseConnection)
@@ -23,6 +28,12 @@ async function createClient(req, res, next) {
     if (err.name === InvalidClientPermissionsError.name) {
       return res.status(400).json({
         message: 'Invalid client permissions'
+      })
+    }
+
+    if (err.name === UnauthorizedUserError.name) {
+      return res.status(401).json({
+        message: 'Unauthorized user'
       })
     }
 

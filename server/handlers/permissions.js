@@ -9,20 +9,23 @@ const verifyPermission = resourceName => action => async (req, res, next) => {
     )
     const resource = await resourcesRepository.getResourceIdByName(resourceName)
 
-    const roleId = res.locals.userInfo.role
-    const permissionsRepository = new PermissionsRepository(
-      res.locals.databaseConnection
-    )
-    const userIsAuthorized = await permissionsRepository.isAuthorized({
-      resourceId: resource.id,
-      roleId,
-      action
-    })
+    if (Object.prototype.hasOwnProperty.call(res.locals, 'clientId')) {
+      console.log(res.locals.clientId)
+    } else {
+      const roleId = res.locals.userInfo.role
+      const permissionsRepository = new PermissionsRepository(
+        res.locals.databaseConnection
+      )
+      const userIsAuthorized = await permissionsRepository.isAuthorized({
+        resourceId: resource.id,
+        roleId,
+        action
+      })
 
-    if (userIsAuthorized === false) {
-      throw new UnauthorizedUserError()
+      if (userIsAuthorized === false) {
+        throw new UnauthorizedUserError()
+      }
     }
-
     next()
   } catch (err) {
     if (err.name === UnauthorizedUserError.name) {

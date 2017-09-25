@@ -1,15 +1,27 @@
 const {AuthorizationTypeError} = require('../core/errors')
 const {verifyToken} = require('../core/token')
+const ClientsService = require('../clients/service')
 
 async function verifyAuthorization(req, res, next) {
   try {
-    const token = req.get('Authorization')
+    const authorization = req.get('Authorization')
 
-    if (!token || !token.startsWith('Bearer')) {
+    if (!authorization || !authorization.startsWith('Bearer')) {
       throw new AuthorizationTypeError()
     }
 
-    res.locals.userInfo = await verifyToken(token.replace('Bearer ', ''))
+    const token = authorization.replace('Bearer ', '')
+
+    if (Object.prototype.hasOwnProperty.call(req.query, 'client_id')) {
+      const clientId = req.query.client_id
+      const clientsService = new ClientsService(res.locals.databaseConnection)
+      await clientsService.verifyClientToken(clientId, token)
+      res.locals.clientId = clientId
+    } else {
+      res.locals.userInfo = await verifyToken(token)
+    }
+
+    next()
   } catch (err) {
     if (err.name === AuthorizationTypeError.name) {
       return res.status(401).json({
@@ -31,8 +43,6 @@ async function verifyAuthorization(req, res, next) {
 
     next(err)
   }
-
-  next()
 }
 
 module.exports = {

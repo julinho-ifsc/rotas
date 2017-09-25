@@ -1,5 +1,6 @@
 const {clientHasValidPermissions} = require('../core/client-permissions')
 const {InvalidClientPermissionsError} = require('../core/errors')
+const {verifyToken} = require('../core/token')
 const PermissionsRespository = require('../permissions/repository')
 const ClientsRepository = require('./repository')
 
@@ -33,6 +34,12 @@ class ClientsService {
     const clientsRepository = new ClientsRepository(this.db)
     await clientsRepository.deleteClientPermissions(clientId)
     await clientsRepository.deleteClient(clientId)
+  }
+
+  async verifyClientToken(clientId, token) {
+    const clientsRepository = new ClientsRepository(this.db)
+    const publicKey = await clientsRepository.getPublicKey(clientId)
+    return verifyToken(token, publicKey)
   }
 }
 

@@ -1,6 +1,7 @@
 require('dotenv').config()
+// eslint-disable-next-line import/no-unassigned-import
+require('make-promises-safe')
 const express = require('express')
-const morgan = require('morgan')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const authRouter = require('./auth/router')
@@ -12,10 +13,6 @@ const {handleError, handleNotFound} = require('./handlers/errors')
 const {createConnection} = require('./database/connection')
 
 const app = express()
-
-if (process.NODE_ENV === 'development') {
-  app.use(morgan('tiny'))
-}
 
 app.use(helmet())
 app.use(bodyParser.json())
