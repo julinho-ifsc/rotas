@@ -34,6 +34,7 @@
     "lint-staged": "^4.0.2",
     "nodemon": "^1.12.1",
     "prettier": "^1.5.3",
+    "snyk": "^1.41.1",
     "supertest": "^3.0.0",
     "xo": "^0.18.2"
   },
@@ -73,8 +74,7 @@
     "jsonwebtoken": "^8.0.0",
     "knex": "^0.13.0",
     "make-promises-safe": "^1.1.0",
-    "mysql": "^2.14.1",
-    "snyk": "^1.41.1"
+    "mysql": "^2.14.1"
   },
   "snyk": true
 }
