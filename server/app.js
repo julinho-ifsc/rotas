@@ -11,6 +11,7 @@ const clientsRouter = require('./clients/router')
 const pointsRouter = require('./points/router')
 const routesRouter = require('./routes/router')
 const {handleError, handleNotFound} = require('./handlers/errors')
+const {handleSanitization} = require('./handlers/sanitize')
 const {createConnection} = require('./database/connection')
 
 const app = express()
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(handleSanitization)
 app.use((req, res, next) => {
   res.locals.databaseConnection = createConnection()
   next()

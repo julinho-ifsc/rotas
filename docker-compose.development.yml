@@ -4,7 +4,7 @@ services:
     build: .
     ports:
       - '8080:8080'
-    command: node_modules/.bin/nodemon --exec npm start
+    command: node_modules/.bin/nodemon -L --exec npm start
     links:
       - mysql
     depends_on:
