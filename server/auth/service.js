@@ -11,6 +11,11 @@ class AuthenticationService {
   async generateToken(email, password) {
     const usersRepository = new UsersRepository(this.db)
     const user = await usersRepository.getUserByEmail(email)
+
+    if (!user) {
+      throw new UnauthorizedUserError()
+    }
+
     const userIsAuthorized = await verifyPassword(password, user.password)
 
     if (userIsAuthorized === false) {

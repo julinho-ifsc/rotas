@@ -2,6 +2,7 @@ require('dotenv').config()
 // eslint-disable-next-line import/no-unassigned-import
 require('make-promises-safe')
 const express = require('express')
+const cors = require('cors')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const authRouter = require('./auth/router')
@@ -14,6 +15,7 @@ const {createConnection} = require('./database/connection')
 
 const app = express()
 
+app.use(cors())
 app.use(helmet())
 app.use(bodyParser.json())
 app.use((req, res, next) => {
