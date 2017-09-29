@@ -12,7 +12,9 @@
     "build:docs": "aglio -i api.apib -o docs/index.html",
     "migrate": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -71,6 +73,8 @@
     "jsonwebtoken": "^8.0.0",
     "knex": "^0.13.0",
     "make-promises-safe": "^1.1.0",
-    "mysql": "^2.14.1"
-  }
+    "mysql": "^2.14.1",
+    "snyk": "^1.41.1"
+  },
+  "snyk": true
 }
