@@ -1,11 +1,10 @@
 FROM node:8.4-alpine
-WORKDIR /app
-RUN apk add --update openssl
-RUN npm install --global nodemon
-COPY package.json package-lock.json ./
-COPY . ./
-RUN npm install
+ENV HOME=/home/app
+COPY package.json package-lock.json $HOME/rotas/
+WORKDIR $HOME/rotas
+RUN npm install --silent --progress=false
+COPY . $HOME/rotas
 EXPOSE 8080
 ENV NPM_CONFIG_LOGLEVEL warn
 USER node
-CMD ["node", "index.js"]
+CMD ["npm", "start"]

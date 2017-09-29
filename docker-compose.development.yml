@@ -4,10 +4,15 @@ services:
     build: .
     ports:
       - '8080:8080'
+    command: node_modules/.bin/nodemon --exec npm start
     links:
       - mysql
     depends_on:
       - mysql
+    volumes:
+      - .:/home/app/rotas
+      - /home/app/rotas/node_modules
+    tty: true
   mysql:
     image: mysql:latest
     expose:

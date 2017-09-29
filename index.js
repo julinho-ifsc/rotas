@@ -1,19 +1,5 @@
-const spawn = require('child_process').spawn
+const app = require('./server/app')
 
-function run(env) {
-  if (env === 'production') {
-    const child = spawn('node', ['server/index.js'])
-    child.stdout.pipe(process.stdout)
-    child.stderr.pipe(process.stderr)
-  } else {
-    const child = spawn('nodemon', ['-L', 'server/index.js'])
-    child.stdout.pipe(process.stdout)
-    child.stderr.pipe(process.stderr)
-  }
-}
-
-try {
-  run(process.env.NODE_ENV)
-} catch (err) {
-  console.log(err)
-}
+app.listen(8080, () => {
+  console.log('Server running')
+})
