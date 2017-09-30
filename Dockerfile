@@ -1,4 +1,4 @@
-FROM node:8.4-alpine
+FROM node:8
 ENV HOME=/home/app
 COPY package.json package-lock.json $HOME/rotas/
 WORKDIR $HOME/rotas
