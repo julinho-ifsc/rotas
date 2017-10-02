@@ -87,6 +87,14 @@ async function seed(knex) {
       delete: true
     },
     {
+      resource_id: permissionsResourceId,
+      role_id: roleUserId,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
       resource_id: clientsResourceId,
       role_id: roleAdminId,
       create: true,
