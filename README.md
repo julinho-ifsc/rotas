@@ -1,6 +1,6 @@
 # rotas-julinho
 
-[![Travis](https://img.shields.io/travis/julinho-ifsc/julinho.svg)](https://travis-ci.org/julinho-ifsc/julinho)
+[![Travis](https://img.shields.io/travis/julinho-ifsc/rotas.svg)](https://travis-ci.org/julinho-ifsc/rotas)
 [![](https://images.microbadger.com/badges/image/julinho/rotas.svg)](https://microbadger.com/images/julinho/rotas "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/julinho/rotas.svg)](https://microbadger.com/images/julinho/rotas "Get your own version badge on microbadger.com")
 [![](https://images.microbadger.com/badges/license/julinho/rotas.svg)](https://microbadger.com/images/julinho/rotas "Get your own license badge on microbadger.com")
