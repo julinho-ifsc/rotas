@@ -1,7 +1,7 @@
 const {clientHasValidPermissions} = require('../core/client-permissions')
 const {InvalidClientPermissionsError} = require('../core/errors')
 const {verifyToken} = require('../core/token')
-const PermissionsRespository = require('../permissions/repository')
+const PermissionsRepository = require('../permissions/repository')
 const ClientsRepository = require('./repository')
 
 class ClientsService {
@@ -10,7 +10,7 @@ class ClientsService {
   }
 
   async createClient({name, key, permissions, resourceOwner}) {
-    const permissionsRespository = new PermissionsRespository(this.db)
+    const permissionsRespository = new PermissionsRepository(this.db)
     const resourceOwnerPermissions = await permissionsRespository.getAllPermissions(
       resourceOwner
     )

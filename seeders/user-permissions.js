@@ -23,6 +23,12 @@ async function seed(knex) {
     },
     {
       name: 'routes'
+    },
+    {
+      name: 'permissions'
+    },
+    {
+      name: 'roles'
     }
   ])
 
@@ -44,6 +50,10 @@ async function seed(knex) {
     .first('id')
     .where('name', 'routes')
 
+  const {id: permissionsResourceId} = await knex('resources')
+    .first('id')
+    .where('name', 'permissions')
+
   await knex('users').insert([
     {
       role_id: roleAdminId,
@@ -63,6 +73,22 @@ async function seed(knex) {
     {
       resource_id: userResourceId,
       role_id: roleAdminId,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
+      resource_id: permissionsResourceId,
+      role_id: roleAdminId,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
+      resource_id: permissionsResourceId,
+      role_id: roleUserId,
       create: true,
       read: true,
       update: true,
