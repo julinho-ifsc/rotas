@@ -10,6 +10,7 @@ const verifyPermission = resourceName => action => async (req, res, next) => {
     const resource = await resourcesRepository.getResourceIdByName(resourceName)
 
     if (Object.prototype.hasOwnProperty.call(res.locals, 'clientId')) {
+      // TODO verify client permission
       console.log(res.locals.clientId)
     } else {
       const roleId = res.locals.userInfo.role

@@ -10,41 +10,11 @@ const router = express.Router()
 
 const verifyClients = verifyPermission('clients')
 
-// Router.get('/', [
-//   verifyAuthorization,
-//   verifyClients('read'),
-//   clientsController.getAll
-// ])
-
-// Router.get('/:clientId', [
-//   verifyAuthorization,
-//   verifyClients('read'),
-//   clientsController.getOne
-// ])
-
 router.post('/', [
   verifyAuthorization,
   verifyClients('create'),
   validateSchema(newClientSchema),
   clientsController.createClient
 ])
-
-// Router.put('/:clientId', [
-//   verifyAuthorization,
-//   verifyClients('update'),
-//   clientsController.updateUser
-// ])
-
-// router.patch('/:clientId', [
-//   verifyAuthorization,
-//   verifyClients('update'),
-//   clientsController.updateUserField
-// ])
-
-// router.delete('/:clientId', [
-//   verifyAuthorization,
-//   verifyClients('delete'),
-//   clientsController.deleteUser
-// ])
 
 module.exports = router

@@ -1,16 +1,14 @@
 const {UnauthorizedUserError} = require('../core/errors')
 const {signToken} = require('../core/token')
 const {verifyPassword} = require('../core/password-hash')
-const UsersRepository = require('../users/repository')
 
 class AuthenticationService {
-  constructor(db) {
-    this.db = db
+  constructor(repository) {
+    this.repository = repository
   }
 
   async generateToken(email, password) {
-    const usersRepository = new UsersRepository(this.db)
-    const user = await usersRepository.getUserByEmail(email)
+    const user = await this.repository.getUserByEmail(email)
 
     if (!user) {
       throw new UnauthorizedUserError()

@@ -393,3 +393,54 @@ Recursos relacionados às rotas na API.
         {
             "message": "Internal Server Error"
         }
+
+# Group Permissões
+Recurso de permissões
+
+## Coleção de Rotas [/permissions]
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### Lista todas as permissões do usuário ou client [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "create": 1,
+                "read": 1,
+                "update": 1,
+                "delete": 1,
+                "name": "users"
+            },
+            {
+                "create": 1,
+                "read": 1,
+                "update": 1,
+                "delete": 1,
+                "name": "permissions"
+            },
+            {
+                "create": 1,
+                "read": 1,
+                "update": 1,
+                "delete": 1,
+                "name": "clients"
+            },
+            {
+                "create": 1,
+                "read": 1,
+                "update": 1,
+                "delete": 1,
+                "name": "points"
+            },
+            {
+                "create": 1,
+                "read": 1,
+                "update": 1,
+                "delete": 1,
+                "name": "routes"
+            }
+        ]
