@@ -30,6 +30,27 @@ class ClientsRepository {
       .first('public_key')
     return publicKey
   }
+
+  async isAuthorized({resourceId, clientId, action}) {
+    const authorizations = await this.db('clients_permission')
+      .join('resources', 'resources.id', 'permissions.resource_id')
+      .join('clients', 'clients.id', 'clients_permission.client_id')
+      .select('permissions.' + action)
+      .where({
+        'resources.id': resourceId,
+        'clients.id': clientId
+      })
+
+    if (authorizations === null || authorizations.length === 0) {
+      return false
+    }
+
+    if (authorizations[0][action]) {
+      return true
+    }
+
+    return false
+  }
 }
 
 module.exports = ClientsRepository

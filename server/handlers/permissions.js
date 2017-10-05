@@ -1,5 +1,6 @@
 const PermissionsRepository = require('../permissions/repository')
 const ResourcesRepository = require('../resources/repository')
+const ClientsRepository = require('../clients/repository')
 const {UnauthorizedUserError} = require('../core/errors')
 
 const verifyPermission = resourceName => action => async (req, res, next) => {
@@ -10,8 +11,19 @@ const verifyPermission = resourceName => action => async (req, res, next) => {
     const resource = await resourcesRepository.getResourceIdByName(resourceName)
 
     if (Object.prototype.hasOwnProperty.call(res.locals, 'clientId')) {
-      // TODO verify client permission
-      console.log(res.locals.clientId)
+      const clientId = res.locals.clientId
+      const clientsRepository = new ClientsRepository(
+        res.locals.databaseConnection
+      )
+      const clientIsAuthorized = await clientsRepository.isAuthorized({
+        resourceId: resource.id,
+        clientId,
+        action
+      })
+
+      if (clientIsAuthorized === false) {
+        throw new UnauthorizedUserError()
+      }
     } else {
       const roleId = res.locals.userInfo.role
       const permissionsRepository = new PermissionsRepository(
