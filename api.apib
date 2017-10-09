@@ -8,6 +8,8 @@ Recurso de autenticação. Use esse endpoint para receber que token [jwt](https:
 
 ## Autenticação [/auth]
 
+### Obtém o token [GET]
+
 + Request (application/json)
 
         {
@@ -30,11 +32,11 @@ Recurso de autenticação. Use esse endpoint para receber que token [jwt](https:
 
 Recursos relacionados às rotas na API.
 
-## Coleção de Rotas [/routes]
-
     + Headers
 
         Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de Rotas [/routes]
 
 ### Lista todas as rotas [GET]
 
@@ -397,11 +399,11 @@ Recursos relacionados às rotas na API.
 # Group Permissões
 Recurso de permissões
 
-## Coleção de Rotas [/permissions]
-
     + Headers
 
         Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de permissões [/permissions]
 
 ### Lista todas as permissões do usuário ou client [GET]
 
@@ -442,5 +444,296 @@ Recurso de permissões
                 "update": 1,
                 "delete": 1,
                 "name": "routes"
+            }
+        ]
+
+# Group Usuários
+
+Recursos relacionados aos usuários na API.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de usuários [/users]
+
+### Lista todas os usuários [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 27,
+                "name": "Admin",
+                "role_id": 29,
+                "email": "admin@example.com"
+            },
+            {
+                "id": 28,
+                "name": "User",
+                "role_id": 30,
+                "email": "user@example.com"
+            }
+        ]
+
+### Cria um usuário [POST]
+
++ Request (application/json)
+
+        {
+            "role_id": 1,
+            "password": "algumasenhadificil,
+            "email": "usuario@gmail.com",
+            "name" : "nome do usuário"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1,
+            "name": "nome do usuário",
+            "role_id": 31,
+            "email": "usuario@gmail.com"
+        }
+
+## Usuários [/users/{user_id}]
+
++ Parameters
+
+    + user_id: `1` (string) - A id de um usuário.
+
+
+### Busca as informações de um usuário [GET]
+
++ Response 200 (application/json)
+
+            {
+                "id": 1,
+                "name": "Admin",
+                "role_id": 29,
+                "email": "admin@example.com"
+            }
+
+
+### Remove um usuário [DELETE]
+
++ Response 204
+
+### Altera um usuário [PUT]
+
++ Request (application/json)
+
+        {
+            "role_id": 1,
+            "password": "algumasenhadificil,
+            "email": "usuario@gmail.com",
+            "name" : "novo nome legal"
+        }
+
++ Response 200 (application/json)
+
+            {
+                "id": 1,
+                "name": "novo nome legal",
+                "role_id": 29,
+                "email": "admin@example.com"
+            }
+
+# Group Pontos
+
+Recursos relacionados aos pontos rfid na API.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de pontos [/points]
+
+### Lista todas os pontos [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 31,
+                "rfid": "123456",
+                "name": "library"
+            },
+            {
+                "id": 32,
+                "rfid": "123456789",
+                "name": "classroom"
+            }
+        ]
+
+### Criar um ponto [POST]
+
++ Request (application/json)
+
+        {
+            "rfid": "123456",
+            "name": "library"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 31,
+            "rfid": "123456",
+            "name": "library"
+        }
+
+## Pontos [/points/{point_id}]
+
++ Parameters
+
+    + point_id: `1` (string) - A id de um ponto.
+
+### Busca as informações de um ponto [GET]
+
++ Response 200 (application/json)
+
+
+        {
+            "id": 1,
+            "rfid": "123456",
+            "name": "library"
+        }
+
+
+### Remove um ponto [DELETE]
+
++ Response 204
+
+### Altera um ponto [PUT]
+
++ Request (application/json)
+
+        {
+            "role_id": 1,
+            "rfid": "123456",
+            "name": "library 2"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "rfid": "123456",
+            "name": "library 2"
+        }
+
+# Group Clientes
+
+Recursos relacionados aos clientes da API. Ex: Chatbot, Serviço de MQTT.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de clientes [/clients]
+
+### Criar um cliente [POST]
+
++ Request (application/json)
+
+        {
+            "name": "julinho chat bot",
+            "permissions": [
+                {
+                    "resource_id": 44,
+                    "create": true,
+                    "read": true,
+                    "update": true,
+                    "delete": true
+                }
+            ],
+            "key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqWhh8bCdBmYha6vVMaNa\niVHsjoCo8JvNl/FCQ8ElB8BEPisWSj9pLuqtn3/Ky1/QE+dLkpN1MWu/WwBR+67L\ntoj3ao8LxpKday25sdC7j1h5phgym4AQfirBjuGXhhVVUoNy2vRXDyJK/uVvVcmm\n3cu2UYjaFe2DnXUb2zOkvezwpcYNVTlsplDAbPR7OL+d2hqKeWdCUupu5nytsYi9\nxKlVoWHlLSDDC264/6FtKi2NULSdU+g0cAfNSjsFmBPFMQ5E4jCbGic/KKHvzLcI\n9Z0jhu0YvKQ5kMgR+cj3dGXoyUaVNXbENYyit8NMQTUkgnBrUxIAKRAJuODbk9l2\ngrasJ6oOrv5eo5OJvsVKVfd3EnBlZv/ZcVYIQq80u2loOoIqNg4B6ZsA2ooFvj8X\nZgyJN//Qpm9fehOlBqLYjpaDCVnFX+zzOCnCuBEOIq539aJrFkXWrFUSZX3r8CZO\norBqpceF9rpjJcayDua/oHPpDFVLSHSMJ0006c54zc5aN5frPQymPLaj45YqJXIS\n0U5K857WVAs49nlBnt+jZgorQ/hXqZlPFCAF/Ym7l6bi5hEtnMHnL5yDi9diL5nu\nZ0qCjllNfJiZVS3m+5UQZ2ghSd45x/GVPiqfhh8LtQMU5gvvhfV/wuiOXj4Xahrf\n6lrl637UM1pIjQuv6zJP6msCAwEAAQ==\n-----END PUBLIC KEY-----\n"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1,
+            "name": "julinho chat bot",
+            "key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqWhh8bCdBmYha6vVMaNa\niVHsjoCo8JvNl/FCQ8ElB8BEPisWSj9pLuqtn3/Ky1/QE+dLkpN1MWu/WwBR+67L\ntoj3ao8LxpKday25sdC7j1h5phgym4AQfirBjuGXhhVVUoNy2vRXDyJK/uVvVcmm\n3cu2UYjaFe2DnXUb2zOkvezwpcYNVTlsplDAbPR7OL+d2hqKeWdCUupu5nytsYi9\nxKlVoWHlLSDDC264/6FtKi2NULSdU+g0cAfNSjsFmBPFMQ5E4jCbGic/KKHvzLcI\n9Z0jhu0YvKQ5kMgR+cj3dGXoyUaVNXbENYyit8NMQTUkgnBrUxIAKRAJuODbk9l2\ngrasJ6oOrv5eo5OJvsVKVfd3EnBlZv/ZcVYIQq80u2loOoIqNg4B6ZsA2ooFvj8X\nZgyJN//Qpm9fehOlBqLYjpaDCVnFX+zzOCnCuBEOIq539aJrFkXWrFUSZX3r8CZO\norBqpceF9rpjJcayDua/oHPpDFVLSHSMJ0006c54zc5aN5frPQymPLaj45YqJXIS\n0U5K857WVAs49nlBnt+jZgorQ/hXqZlPFCAF/Ym7l6bi5hEtnMHnL5yDi9diL5nu\nZ0qCjllNfJiZVS3m+5UQZ2ghSd45x/GVPiqfhh8LtQMU5gvvhfV/wuiOXj4Xahrf\n6lrl637UM1pIjQuv6zJP6msCAwEAAQ==\n-----END PUBLIC KEY-----\n",
+            "permissions": [
+                {
+                    "resource_id": 80,
+                    "create": true,
+                    "read": true,
+                    "update": true,
+                    "delete": true
+                }
+            ]
+        }
+
+# Group Recursos
+
+Recursos relacionados aos recursos na API.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de recursos [/resource]
+
+### Lista todas os recursos [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 80,
+                "name": "users"
+            },
+            {
+                "id": 81,
+                "name": "clients"
+            },
+            {
+                "id": 82,
+                "name": "points"
+            },
+            {
+                "id": 83,
+                "name": "routes"
+            },
+            {
+                "id": 84,
+                "name": "permissions"
+            },
+            {
+                "id": 85,
+                "name": "roles"
+            },
+            {
+                "id": 86,
+                "name": "resources"
+            }
+        ]
+
+# Group Grupos
+
+Recursos relacionados aos grupos na API.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de grupos [/roles]
+
+### Lista todas os grupos [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 35,
+                "name": "admin"
+            },
+            {
+                "id": 36,
+                "name": "user"
             }
         ]

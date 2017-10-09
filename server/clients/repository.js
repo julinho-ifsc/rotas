@@ -9,10 +9,10 @@ class ClientsRepository {
 
   async addClientPermissions(clientId, permissions) {
     return this.db('clients_permission').insert(
-      permissions.map(permission => {
-        permission.client_id = clientId
-        return permission
-      })
+      permissions.map(permission => ({
+        ...permission,
+        client_id: clientId
+      }))
     )
   }
 

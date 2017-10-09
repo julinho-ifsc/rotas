@@ -6,6 +6,10 @@ class ResourcesRepository {
   async getResourceIdByName(name) {
     return this.db('resources').first('id').where('name', name)
   }
+
+  async list() {
+    return this.db('resources').select('id', 'name')
+  }
 }
 
 module.exports = ResourcesRepository

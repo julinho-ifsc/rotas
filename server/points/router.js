@@ -3,7 +3,7 @@ const {verifyAuthorization} = require('../handlers/auth')
 const {verifyPermission} = require('../handlers/permissions')
 const {validateSchema} = require('../handlers/schemas')
 const pointsController = require('./controller')
-const {newPointSchema, patchPointSchema} = require('./schemas')
+const {newPointSchema} = require('./schemas')
 
 // eslint-disable-next-line new-cap
 const router = express.Router()
@@ -34,13 +34,6 @@ router.put('/:pointId', [
   verifyPoints('update'),
   validateSchema(newPointSchema),
   pointsController.updatePoint
-])
-
-router.patch('/:pointId', [
-  verifyAuthorization,
-  verifyPoints('update'),
-  validateSchema(patchPointSchema),
-  pointsController.updatePointField
 ])
 
 router.delete('/:pointId', [

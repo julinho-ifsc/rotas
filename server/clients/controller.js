@@ -21,9 +21,7 @@ async function createClient(req, res, next) {
       resourceOwner
     })
 
-    return res.status(201).json({
-      client
-    })
+    return res.status(201).json(client)
   } catch (err) {
     if (err.name === InvalidClientPermissionsError.name) {
       return res.status(400).json({
