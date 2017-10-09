@@ -7,7 +7,7 @@
     "prelint": "prettier --single-quote --no-semi --no-bracket-spacing --trailing-comma none --write \"server/**/*.js\" --write \"seeders/**/*.js\" --write \"migartions/**/*.js\"",
     "lint": "xo --fix",
     "test:unit:watch": "ava test/unit/**/*.js -w --color",
-    "precommit": "lint-staged",
+    "precommit": "lint-staged && npm run build:docs && git add docs",
     "start": "node index.js",
     "build:docs": "aglio -i api.apib -o docs/index.html",
     "migrate": "knex migrate:latest",
