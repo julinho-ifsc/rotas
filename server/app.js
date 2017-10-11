@@ -15,7 +15,7 @@ const resourcesRouter = require('./resources/router')
 const rolesRouter = require('./roles/router')
 const {handleError, handleNotFound} = require('./handlers/errors')
 const {handleSanitization} = require('./handlers/sanitize')
-const {createConnection} = require('./database/connection')
+const databaseConnection = require('./database/connection')
 
 const app = express()
 
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 
 app.use(handleSanitization)
 app.use((req, res, next) => {
-  res.locals.databaseConnection = createConnection()
+  res.locals.databaseConnection = databaseConnection
   next()
 })
 app.use('/auth', authRouter)
@@ -40,10 +40,6 @@ app.use('/routes', routesRouter)
 app.use('/permissions', permissionsRouter)
 app.use('/resources', resourcesRouter)
 app.use('/roles', rolesRouter)
-app.use(async (req, res, next) => {
-  await res.locals.databaseConnection.destroy()
-  next()
-})
 app.use(handleError)
 app.use(handleNotFound)
 
