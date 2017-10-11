@@ -1,5 +1,4 @@
 FROM node:8
-MAINTAINER Thiago Santos <thia.mdossantos@gmail.com>
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -12,7 +11,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/julinho-ifsc/rotas" \
       org.label-schema.vendor="Marvi•E Technologies" \
       org.label-schema.version="8.0" \
-      org.label-schema.schema-version="1.0"
+      org.label-schema.schema-version="1.0" \
+      maintainer="Thiago Santos <thia.mdossantos@gmail.com>"
 
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV HOME=/home/app
@@ -27,4 +27,4 @@ RUN chmod 0755 /docker-entrypoint.sh && \
 EXPOSE 8080
 USER node
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
