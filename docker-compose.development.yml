@@ -7,8 +7,10 @@ services:
     command: node_modules/.bin/nodemon -L --exec npm start
     links:
       - mysql
+      - translator
     depends_on:
       - mysql
+      - translator
     volumes:
       - .:/home/app/rotas
       - /home/app/rotas/node_modules
@@ -22,5 +24,12 @@ services:
       MYSQL_DATABASE: project
     volumes:
       - db-data:/var/lib/mysql
+  translator:
+    image: julinho/tradutor
+    expose:
+      - 3000
+    environment:
+      MQTT_BROKER: mqtt.sj.ifsc.edu.br
+      ROBOT: julinho
 volumes:
   db-data:

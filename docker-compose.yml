@@ -6,8 +6,10 @@ services:
       - '8080:8080'
     links:
       - mysql
+      - translator
     depends_on:
       - mysql
+      - translator
   mysql:
     image: mysql:latest
     expose:
@@ -17,5 +19,12 @@ services:
       MYSQL_DATABASE: project
     volumes:
       - db-data:/var/lib/mysql
+  translator:
+    image: julinho/tradutor:latest
+    expose:
+      - 3000
+    environment:
+      MQTT_BROKER: mqtt.sj.ifsc.edu.br
+      ROBOT: julinho
 volumes:
   db-data:

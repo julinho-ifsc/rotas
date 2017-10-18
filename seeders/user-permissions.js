@@ -32,6 +32,9 @@ async function seed(knex) {
     },
     {
       name: 'resources'
+    },
+    {
+      name: 'walk'
     }
   ])
 
@@ -58,6 +61,9 @@ async function seed(knex) {
   const {id: rolesResourceId} = await knex('resources')
     .first('id')
     .where('name', 'roles')
+  const {id: walkResourceId} = await knex('resources')
+    .first('id')
+    .where('name', 'walk')
 
   const {id: permissionsResourceId} = await knex('resources')
     .first('id')
@@ -81,6 +87,14 @@ async function seed(knex) {
   await knex('permissions').insert([
     {
       resource_id: userResourceId,
+      role_id: roleAdminId,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    },
+    {
+      resource_id: walkResourceId,
       role_id: roleAdminId,
       create: true,
       read: true,

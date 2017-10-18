@@ -34,6 +34,22 @@ class RoutesRepository {
       .where('routes.id', id)
   }
 
+  async findByName(name) {
+    return this.db('routes_point')
+      .join('routes', 'routes.id', 'routes_point.route_id')
+      .join('points', 'points.id', 'routes_point.point_id')
+      .select(
+        'routes.id',
+        'routes.name',
+        'points.id as point',
+        'points.rfid as rfid',
+        'routes_point.position',
+        'routes_point.action',
+        'points.name as pointName'
+      )
+      .where('routes.name', 'like', `%${name}%`)
+  }
+
   async deleteOne(id) {
     await this.db('routes_point').where('route_id', id).del()
     return this.db('routes').where('id', id).del()

@@ -8,7 +8,7 @@ Recurso de autenticação. Use esse endpoint para receber que token [jwt](https:
 
 ## Autenticação [/auth]
 
-### Obtém o token [GET]
+### Obtém o token [POST]
 
 + Request (application/json)
 
@@ -26,6 +26,29 @@ Recurso de autenticação. Use esse endpoint para receber que token [jwt](https:
 
         {
             "message": "Invalid schema"
+        }
+
+# Group Andar
+Faz o julinho andar.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Andar [/walk]
+
+### Manda o julinho andar [POST]
+
++ Request (application/json)
+
+        {
+            "route": "NOME_DA_ROTA"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Route sent with success!"
         }
 
 # Group Rotas

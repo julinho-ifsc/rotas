@@ -46,6 +46,24 @@ class RoutesService {
     }, {})
   }
 
+  async findByName(name) {
+    const routesRepository = new RoutesRepository(this.db)
+    const route = await routesRepository.findByName(name)
+    return route.reduce((previousValue, currentValue, currentIndex, array) => {
+      if (currentIndex === 0) {
+        return initRouteList(currentValue)
+      }
+
+      previousValue.points.push(getPoint(currentValue))
+
+      if (currentIndex === array.length - 1) {
+        previousValue.points = sortPoints(previousValue.points)
+      }
+
+      return previousValue
+    }, {})
+  }
+
   async createRoute({name, points}) {
     const routesRepository = new RoutesRepository(this.db)
     const id = await routesRepository.createRoute({name, points})
