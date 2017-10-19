@@ -1,4 +1,4 @@
-const {AuthorizationTypeError} = require('../core/errors')
+const {AuthorizationTypeError, NotFoundError} = require('../core/errors')
 const {verifyToken} = require('../core/token')
 const ClientsService = require('../clients/service')
 
@@ -38,6 +38,12 @@ async function verifyAuthorization(req, res, next) {
     if (err.name === 'JsonWebTokenError') {
       return res.status(401).json({
         message: 'Unauthorized user'
+      })
+    }
+
+    if (err.name === NotFoundError.name) {
+      return res.status(404).json({
+        message: 'User not found'
       })
     }
 

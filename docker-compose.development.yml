@@ -8,12 +8,13 @@ services:
     links:
       - mysql
       - translator
+      - mongo
     depends_on:
       - mysql
       - translator
+      - mongo
     volumes:
       - .:/home/app/rotas
-      - /home/app/rotas/node_modules
     tty: true
   mysql:
     image: mysql:latest
@@ -24,6 +25,12 @@ services:
       MYSQL_DATABASE: project
     volumes:
       - db-data:/var/lib/mysql
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
   translator:
     image: julinho/tradutor
     expose:
@@ -33,3 +40,4 @@ services:
       ROBOT: julinho
 volumes:
   db-data:
+  mongo-data:

@@ -7,9 +7,11 @@ services:
     links:
       - mysql
       - translator
+      - mongo
     depends_on:
       - mysql
       - translator
+      - mongo
   mysql:
     image: mysql:latest
     expose:
@@ -19,6 +21,12 @@ services:
       MYSQL_DATABASE: project
     volumes:
       - db-data:/var/lib/mysql
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
   translator:
     image: julinho/tradutor:latest
     expose:
@@ -28,3 +36,4 @@ services:
       ROBOT: julinho
 volumes:
   db-data:
+  mongo-data:

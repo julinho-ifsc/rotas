@@ -74,6 +74,7 @@
     "jsonwebtoken": "^8.0.0",
     "knex": "^0.13.0",
     "make-promises-safe": "^1.1.0",
+    "mongodb": "^2.2.33",
     "mysql": "^2.14.1",
     "request": "^2.83.0"
   },

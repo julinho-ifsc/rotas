@@ -1,3 +1,5 @@
+const {NotFoundError} = require('../core/errors')
+
 class ClientsRepository {
   constructor(db) {
     this.db = db
@@ -25,17 +27,23 @@ class ClientsRepository {
   }
 
   async getPublicKey(clientId) {
-    const {public_key: publicKey} = await this.db('clients')
+    const client = await this.db('clients')
       .where('id', clientId)
       .first('public_key')
+
+    if (!client) {
+      throw new NotFoundError()
+    }
+
+    const {public_key: publicKey} = client
     return publicKey
   }
 
   async isAuthorized({resourceId, clientId, action}) {
     const authorizations = await this.db('clients_permission')
-      .join('resources', 'resources.id', 'permissions.resource_id')
+      .join('resources', 'resources.id', 'clients_permission.resource_id')
       .join('clients', 'clients.id', 'clients_permission.client_id')
-      .select('permissions.' + action)
+      .select('clients_permission.' + action)
       .where({
         'resources.id': resourceId,
         'clients.id': clientId

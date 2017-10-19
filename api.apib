@@ -760,3 +760,50 @@ Recursos relacionados aos grupos na API.
                 "name": "user"
             }
         ]
+
+# Group Status
+
+Recursos relacionados ao status do julinho.
+
+    + Headers
+
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+## Coleção de Status [/status]
+
+### Obtém as ultimas 100 atualizações de status do julinho [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "time": "2017-10-19T18:03:39.000Z",
+                "topic": "help",
+                "status": false
+            },
+            {
+                "time": "2017-10-19T18:03:43.000Z",
+                "topic": "help",
+                "status": true
+            },
+            {
+                "time": "2017-10-19T18:03:44.000Z",
+                "topic": "help",
+                "status": false
+            }
+        ]
+
+### Atualiza o status [POST]
+
++ Request (application/json)
+
+        {
+            "topic": "help",
+            "status": false
+        }
+
++ Response 200 (application/json)
+
+        {
+            "message": "Status updated with success"
+        }
