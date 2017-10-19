@@ -22,7 +22,8 @@ COPY package.json package-lock.json $HOME/rotas/
 COPY . $HOME/rotas
 COPY ./docker-entrypoint.sh /
 RUN chmod 0755 /docker-entrypoint.sh && \
-    npm install --silent --progress=false
+    npm install --silent --progress=false && \
+    chown -R node $HOME
 
 EXPOSE 8080
 USER node
