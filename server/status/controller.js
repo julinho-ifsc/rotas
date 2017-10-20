@@ -1,8 +1,10 @@
 const {MongoClient, ObjectID} = require('mongodb')
 
+const url = 'mongodb://' + process.env.MONGO_HOST + ':27017'
+
 async function updateStatus(req, res, next) {
   try {
-    const db = await MongoClient.connect('mongodb://mongo:27017')
+    const db = await MongoClient.connect(url)
     const collection = db.collection('status')
 
     await collection.insertOne(req.body)
@@ -17,7 +19,7 @@ async function updateStatus(req, res, next) {
 
 async function status(req, res, next) {
   try {
-    const db = await MongoClient.connect('mongodb://mongo:27017')
+    const db = await MongoClient.connect(url)
     const collection = db.collection('status')
 
     const results = await collection
