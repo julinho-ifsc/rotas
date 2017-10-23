@@ -24,6 +24,7 @@ async function status(req, res, next) {
 
     const results = await collection
       .find({})
+      .sort({_id: -1})
       .limit(100)
       .map(document => {
         const objectId = new ObjectID(document._id)
