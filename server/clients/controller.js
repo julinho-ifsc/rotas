@@ -63,7 +63,19 @@ async function deleteClient(req, res, next) {
   }
 }
 
+async function listClients(req, res, next) {
+  try {
+    const clientsService = new ClientsService(res.locals.databaseConnection)
+    const clients = await clientsService.list()
+
+    return res.json(clients)
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   createClient,
-  deleteClient
+  deleteClient,
+  listClients
 }

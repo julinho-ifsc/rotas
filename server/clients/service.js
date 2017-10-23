@@ -41,6 +41,11 @@ class ClientsService {
     const publicKey = await clientsRepository.getPublicKey(clientId)
     return verifyToken(token, publicKey)
   }
+
+  async list() {
+    const clientsRepository = new ClientsRepository(this.db)
+    return clientsRepository.list()
+  }
 }
 
 module.exports = ClientsService

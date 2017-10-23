@@ -5,6 +5,10 @@ class ClientsRepository {
     this.db = db
   }
 
+  async list() {
+    return this.db('clients').select('id', 'name')
+  }
+
   async createClient(name, key) {
     return this.db('clients').returning('id').insert({name, public_key: key})
   }

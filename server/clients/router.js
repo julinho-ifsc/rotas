@@ -10,6 +10,12 @@ const router = express.Router()
 
 const verifyClients = verifyPermission('clients')
 
+router.get('/', [
+  verifyAuthorization,
+  verifyClients('read'),
+  clientsController.listClients
+])
+
 router.post('/', [
   verifyAuthorization,
   verifyClients('create'),
