@@ -32,7 +32,8 @@ async function status(req, res, next) {
         return {
           time: objectId.getTimestamp(),
           topic: document.topic,
-          status: document.status
+          status: document.status,
+          robot: document.robot || 'julinho'
         }
       })
       .toArray()
