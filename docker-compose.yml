@@ -6,11 +6,13 @@ services:
       - '8080:8080'
     links:
       - mysql
-      - translator
+      - julinho_translator
+      - julinha_translator
       - mongo
     depends_on:
       - mysql
-      - translator
+      - julinho_translator
+      - julinha_translator
       - mongo
   mysql:
     image: mysql:latest
@@ -27,13 +29,20 @@ services:
       - mongo-data:/data/db
     ports:
       - '27017:27017'
-  translator:
+  julinho_translator:
     image: julinho/tradutor:latest
     expose:
       - 3000
     environment:
-      MQTT_BROKER: mqtt.sj.ifsc.edu.br
+      MQTT_BROKER: nuvem2.sj.ifsc.edu.br
       ROBOT: julinho
+  julinha_translator:
+    image: julinho/tradutor:latest
+    expose:
+      - 3000
+    environment:
+      MQTT_BROKER: nuvem2.sj.ifsc.edu.br
+      ROBOT: julinha
 volumes:
   db-data:
   mongo-data:

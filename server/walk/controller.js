@@ -2,10 +2,18 @@ const request = require('request')
 const {NotFoundError, TranslationError} = require('../core/errors')
 const RoutesService = require('../routes/service')
 
+function getUri(robot) {
+  if (robot === 'julinha') {
+    return 'http://' + process.env.JULINHA_TRANSLATOR_HOST + ':3000/json'
+  }
+
+  return 'http://' + process.env.JULINHO_TRANSLATOR_HOST + ':3000/json'
+}
+
 async function walk(req, res, next) {
   try {
     const routesService = new RoutesService(res.locals.databaseConnection)
-    const {route: name} = req.body
+    const {route: name, robot} = req.body
     const route = await routesService.findByName(name)
 
     if (!route || Object.keys(route).length === 0) {
@@ -14,7 +22,7 @@ async function walk(req, res, next) {
 
     const options = {
       method: 'POST',
-      uri: 'http://' + process.env.TRANSLATOR_HOST + ':3000/json',
+      uri: getUri(robot),
       body: JSON.stringify(route)
     }
 
