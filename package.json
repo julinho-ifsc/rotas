@@ -72,7 +72,7 @@
     "is-plain-obj": "^1.1.0",
     "jsonschema": "^1.2.0",
     "jsonwebtoken": "^8.0.0",
-    "knex": "^0.13.0",
+    "knex": "^0.14.3",
     "make-promises-safe": "^1.1.0",
     "mongodb": "^2.2.33",
     "morgan": "^1.9.0",
